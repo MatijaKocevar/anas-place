@@ -1,5 +1,5 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import "./globals.css";
+import "../styles/globals.css";
 
 export const metadata = {
     title: "Next.js",
@@ -7,8 +7,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    const styles = "";
-
     return (
         <ClerkProvider>
             <html lang="en">
