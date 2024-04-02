@@ -7,15 +7,6 @@ export default authMiddleware({
             return redirectToSignIn({ returnBackUrl: req.url });
         }
 
-        if (auth.userId && !auth.orgId && req.nextUrl.pathname !== "/org-selection") {
-            const orgSelection = new URL("/org-selection", req.url);
-            return NextResponse.redirect(orgSelection);
-        }
-
-        if (auth.userId && !auth.isPublicRoute) {
-            return NextResponse.next();
-        }
-
         return NextResponse.next();
     },
 });
