@@ -10,7 +10,7 @@ const Navbar = () => {
             <div className="flex justify-between ">
                 <Link href="/" className="flex items-center gap-1">
                     <Image src="/icons/logo.svg" width={32} height={32} alt="logo" />
-                    <p className="text-[26px] font-extrabold text-black max-sm:hidden">Ana&apos;s place</p>
+                    <p className="text-[26px] font-extrabold text-black max-lg:hidden">Ana&apos;s place</p>
                 </Link>
 
                 <div className="flex justify-between gap-5">
