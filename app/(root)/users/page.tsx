@@ -6,9 +6,9 @@ const UsersPage = async () => {
     const users = await clerkClient.users.getUserList({ limit: 100 });
 
     return (
-        <h1 className="text-black">
+        <div>
             <DataTable columns={columns} data={JSON.parse(JSON.stringify(users))} />
-        </h1>
+        </div>
     );
 };
 
