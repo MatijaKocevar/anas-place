@@ -45,6 +45,9 @@ const config = {
                         1: "#F6E05E", // Golden hue
                     },
                 },
+                muted: {
+                    1: "#E2E8F0", // Light gray for muted backgrounds
+                },
             },
             borderRadius: {
                 lg: "var(--radius)",
