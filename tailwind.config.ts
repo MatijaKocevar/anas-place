@@ -18,28 +18,32 @@ const config = {
                 sans: ["var(--font-sans)", ...fontFamily.sans],
             },
             colors: {
-                dark: {
-                    1: "#1C1F2E",
-                    2: "#161925",
-                    3: "#252A41",
-                    4: "#1E2757",
+                primary: {
+                    1: "#F3BFD3", // Soft, pastel pink
                 },
-                blue: {
-                    1: "#0E78F9",
+                secondary: {
+                    1: "#D6BBFB", // Gentle lavender
                 },
-                sky: {
-                    1: "#C9DDFF",
-                    2: "#ECF0FF",
-                    3: "#F5FCFF",
+                tertiary: {
+                    blue: {
+                        1: "#BFDBFE", // Serene sky blue
+                    },
+                    green: {
+                        1: "#BBF7D0", // Pastel mint green
+                    },
                 },
-                orange: {
-                    1: "#FF742E",
+                neutral: {
+                    1: "#F7FAFC", // Light gray for backgrounds
+                    2: "#CBD5E0", // Medium gray for borders
+                    3: "#4A5568", // Dark gray for text
                 },
-                purple: {
-                    1: "#830EF9",
-                },
-                yellow: {
-                    1: "#F9A90E",
+                accent: {
+                    coral: {
+                        1: "#FEB2B2", // Coral/salmon pink
+                    },
+                    gold: {
+                        1: "#F6E05E", // Golden hue
+                    },
                 },
             },
             borderRadius: {

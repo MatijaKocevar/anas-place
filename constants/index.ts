@@ -10,18 +10,23 @@ export const sidebarLinks = [
         label: "Bookings",
     },
     {
-        imgURL: "/icons/hamburger.svg",
-        route: "/users",
-        label: "Users",
+        imgURL: "/icons/gallery.svg",
+        route: "/gallery",
+        label: "Gallery",
     },
     {
-        imgURL: "/icons/hamburger.svg",
+        imgURL: "/icons/services.svg",
         route: "/services",
         label: "Services",
     },
     {
-        imgURL: "/icons/hamburger.svg",
+        imgURL: "/icons/receipt.svg",
         route: "/receipts",
         label: "Receipts",
+    },
+    {
+        imgURL: "/icons/users.svg",
+        route: "/users",
+        label: "Users",
     },
 ];

@@ -15,16 +15,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="en">
             <ClerkProvider
                 appearance={{
-                    variables: {
-                        colorText: "#fff",
-                        colorPrimary: "#0E78F9",
-                        colorBackground: "#1C1F2E",
-                        colorInputBackground: "#252A41",
-                        colorInputText: "#fff",
-                    },
+                    variables: {},
                 }}
             >
-                <body className={`${inter.className} bg-dark-2`}>{children}</body>
+                <body className={`${inter.className}`}>{children}</body>
             </ClerkProvider>
         </html>
     );
