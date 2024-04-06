@@ -1,6 +1,6 @@
 import React from "react";
 import { clerkClient } from "@clerk/nextjs";
-import { UserDataTable } from "../../../../components/UserDataTable";
+import { UserDataTable } from "../../../../components/users/UserDataTable";
 import { userTableColumns } from "../../../../constants/user-table-columns";
 
 const UsersPage = async () => {
