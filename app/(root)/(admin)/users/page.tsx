@@ -1,7 +1,6 @@
 import React from "react";
-import { clerkClient, Protect } from "@clerk/nextjs";
+import { clerkClient } from "@clerk/nextjs";
 import UsersTable from "../../../../components/UsersTable";
-import { auth } from "@clerk/nextjs/server";
 
 const UsersPage = async () => {
     const users = await clerkClient.users?.getUserList();
