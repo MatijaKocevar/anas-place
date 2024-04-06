@@ -1,5 +1,4 @@
 import { SignedIn, UserButton } from "@clerk/nextjs";
-
 import MobileNav from "./MobileNav";
 import Link from "next/link";
 import Image from "next/image";
