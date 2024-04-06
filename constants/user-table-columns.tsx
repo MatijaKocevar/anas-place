@@ -4,7 +4,7 @@ import { User } from "@clerk/nextjs/api";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 
-export const columns: ColumnDef<User>[] = [
+export const userTableColumns: ColumnDef<User>[] = [
     {
         accessorKey: "imageUrl",
         header: "Image",
