@@ -8,17 +8,18 @@ import {
     ColumnFiltersState,
     getFilteredRowModel,
 } from "@tanstack/react-table";
-
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { User } from "@clerk/nextjs/api";
+import { useRouter } from "next/navigation";
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
+interface DataTableProps {
+    columns: ColumnDef<User>[];
+    data: User[];
 }
 
-export function UserDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function UserDataTable({ columns, data }: DataTableProps) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const table = useReactTable({
         data,
@@ -30,6 +31,8 @@ export function UserDataTable<TData, TValue>({ columns, data }: DataTableProps<T
             columnFilters,
         },
     });
+
+    const router = useRouter();
 
     return (
         <>
@@ -65,6 +68,7 @@ export function UserDataTable<TData, TValue>({ columns, data }: DataTableProps<T
                                     className="hover:bg-muted-1"
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
+                                    onClick={() => router.push(`/users/update/${row.original.id}`)}
                                 >
                                     {row.getVisibleCells().map((cell) => {
                                         return (
