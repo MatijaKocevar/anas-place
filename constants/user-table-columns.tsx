@@ -22,8 +22,4 @@ export const userTableColumns: ColumnDef<User>[] = [
         accessorKey: "lastName",
         header: "Last Name",
     },
-    {
-        accessorKey: "username",
-        header: "Username",
-    },
 ];
