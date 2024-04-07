@@ -21,6 +21,7 @@ interface DataTableProps {
 
 export function UserDataTable({ columns, data }: DataTableProps) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const router = useRouter();
     const table = useReactTable({
         data,
         columns,
@@ -31,8 +32,6 @@ export function UserDataTable({ columns, data }: DataTableProps) {
             columnFilters,
         },
     });
-
-    const router = useRouter();
 
     return (
         <>
@@ -65,7 +64,7 @@ export function UserDataTable({ columns, data }: DataTableProps) {
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
-                                    className="hover:bg-muted-1"
+                                    className="hover:bg-muted-1 cursor-pointer"
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
                                     onClick={() => router.push(`/users/update/${row.original.id}`)}

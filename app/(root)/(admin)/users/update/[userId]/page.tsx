@@ -11,7 +11,11 @@ interface UpdateUserPageProps {
 const UpdateUserPage = async ({ params }: UpdateUserPageProps) => {
     const user: User = await clerkClient.users?.getUser(params.userId);
 
-    return <div>{<UserEditForm user={JSON.parse(JSON.stringify(user))} />}</div>;
+    return (
+        <div className="flex w-full h-full">
+            <UserEditForm user={JSON.parse(JSON.stringify(user))} />
+        </div>
+    );
 };
 
 export default UpdateUserPage;
