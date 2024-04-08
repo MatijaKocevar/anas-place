@@ -3,7 +3,6 @@
 import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 interface UpdateUserPageProps {
     params: {
         userId: string;
@@ -52,7 +51,6 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
         if (type) {
             const updatedArray = formData[type]?.map((item, idx) => {
                 if (idx === index) {
-                    console.log({ ...item, [name]: value });
                     return { ...item, [name]: value };
                 }
                 return item;
