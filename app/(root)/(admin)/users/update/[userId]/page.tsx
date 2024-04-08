@@ -3,6 +3,7 @@
 import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 interface UpdateUserPageProps {
     params: {
         userId: string;
@@ -24,9 +25,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
             setUser(await response.json());
         };
 
-        fetchUser();
+        if (params.userId) fetchUser();
         // eslint-disable-next-line react-hooks/exhaustive-deps -- run on mount
-    }, []);
+    }, [params.userId]);
 
     useEffect(() => {
         if (user) {
