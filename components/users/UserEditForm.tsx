@@ -1,32 +1,63 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { User } from "@clerk/nextjs/server";
 import Image from "next/image";
 
 export interface UserEditFormProps {
-    user: User;
+    userId: string;
 }
 
-const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
-    const [formData, setFormData] = useState({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        username: user.username || "",
-        emailAddresses: user.emailAddresses || [],
-        imageUrl: user.imageUrl || "",
-        phoneNumbers: user.phoneNumbers || [],
-    });
+const UserEditForm = ({ userId }: UserEditFormProps) => {
+    const [user, setUser] = useState<User | null>(null);
+    const [formData, setFormData] = useState<Partial<User>>({});
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index?: number) => {
+    useEffect(() => {
+        const fetchUser = async () => {
+            const response = await fetch(`/users/api/get-user/${userId}`);
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch user");
+            }
+
+            setUser(await response.json());
+        };
+
+        fetchUser();
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- run on mount
+    }, []);
+
+    useEffect(() => {
+        if (user) {
+            setFormData({
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                username: user.username,
+                emailAddresses: user.emailAddresses,
+                phoneNumbers: user.phoneNumbers,
+            });
+        }
+    }, [user]);
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        index?: number,
+        type?: "emailAddresses" | "phoneNumbers"
+    ) => {
         const { name, value } = e.target;
 
-        if (typeof index === "number") {
-            const updatedEmailAddresses = [...formData.emailAddresses];
-            updatedEmailAddresses[index] = { ...updatedEmailAddresses[index], emailAddress: value };
+        if (type) {
+            const updatedArray = formData[type]?.map((item, idx) => {
+                if (idx === index) {
+                    console.log({ ...item, [name]: value });
+                    return { ...item, [name]: value };
+                }
+                return item;
+            });
             setFormData({
                 ...formData,
-                emailAddresses: updatedEmailAddresses,
+                [type]: updatedArray,
             });
         } else {
             setFormData({
@@ -36,9 +67,27 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
         }
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Data after changes:", formData);
+
+        try {
+            const endpoint = `/users/api/update-user/${userId}`;
+            const response = await fetch(endpoint, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to update user: " + response.statusText);
+            }
+
+            await response.json();
+        } catch (error) {
+            console.error("Error updating user:", error);
+        }
     };
 
     return (
@@ -47,10 +96,10 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
             className="flex flex-col justify-between w-full space-y-6 max-w-3xl mx-auto my-8 p-6 shadow-lg rounded-md bg-white"
         >
             <div>
-                {formData.imageUrl && (
+                {user?.imageUrl && (
                     <div className="flex flex-col items-center">
                         <Image
-                            src={formData.imageUrl}
+                            src={user?.imageUrl ?? ""}
                             alt="Profile"
                             className="rounded-full object-cover mb-4"
                             width={200}
@@ -66,7 +115,7 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
                     <input
                         type="text"
                         name="firstName"
-                        value={formData.firstName}
+                        value={formData.firstName ?? ""}
                         onChange={handleInputChange}
                         title="First Name"
                         className="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm transition duration-150 ease-in-out sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
@@ -77,7 +126,7 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
                     <input
                         type="text"
                         name="lastName"
-                        value={formData.lastName}
+                        value={formData.lastName ?? ""}
                         onChange={handleInputChange}
                         title="Last Name"
                         className="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm transition duration-150 ease-in-out sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
@@ -88,7 +137,7 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
                     <input
                         type="text"
                         name="username"
-                        value={formData.username}
+                        value={formData.username ?? ""}
                         onChange={handleInputChange}
                         title="Username"
                         className="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm transition duration-150 ease-in-out sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
@@ -96,28 +145,30 @@ const UserEditForm: React.FC<UserEditFormProps> = ({ user }) => {
                 </div>
                 <div className="flex flex-col my-2">
                     <label className="text-lg font-semibold text-gray-700 mb-2">Emails</label>
-                    {formData.emailAddresses.map((email, index) => (
+                    {formData.emailAddresses?.map((email, index) => (
                         <input
                             key={email.id}
                             type="text"
                             name="emailAddress"
                             value={email.emailAddress}
-                            onChange={(e) => handleInputChange(e, index)}
+                            onChange={(e) => handleInputChange(e, index, "emailAddresses")}
                             title="Email"
+                            disabled
                             className="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm transition duration-150 ease-in-out sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                         />
                     ))}
                 </div>
                 <div className="flex flex-col my-2">
                     <label className="text-lg font-semibold text-gray-700 mb-2">Phone numbers</label>
-                    {formData.phoneNumbers.map((number, index) => (
+                    {formData.phoneNumbers?.map((phoneNumber, index) => (
                         <input
-                            key={number.id}
+                            key={phoneNumber.id}
                             type="text"
                             name="phoneNumber"
-                            value={number.phoneNumber}
-                            onChange={(e) => handleInputChange(e, index)}
+                            value={phoneNumber.phoneNumber}
+                            onChange={(e) => handleInputChange(e, index, "phoneNumbers")}
                             title="Email"
+                            disabled
                             className="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm transition duration-150 ease-in-out sm:text-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
                         />
                     ))}
