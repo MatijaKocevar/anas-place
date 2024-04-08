@@ -19,6 +19,7 @@ const UsersPage = () => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+
     const table = useReactTable({
         data,
         columns: userTableColumns,
