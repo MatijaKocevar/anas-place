@@ -3,7 +3,6 @@
 import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 interface UpdateUserPageProps {
     params: {
         userId: string;
