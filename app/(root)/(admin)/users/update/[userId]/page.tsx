@@ -51,7 +51,6 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
         if (type) {
             const updatedArray = formData[type]?.map((item, idx) => {
                 if (idx === index) {
-                    console.log({ ...item, [name]: value });
                     return { ...item, [name]: value };
                 }
                 return item;
