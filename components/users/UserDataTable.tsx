@@ -21,6 +21,7 @@ interface DataTableProps {
 export function UserDataTable({ columns }: DataTableProps) {
     const [data, setData] = useState<User[]>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
     const table = useReactTable({
         data,
@@ -35,18 +36,28 @@ export function UserDataTable({ columns }: DataTableProps) {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            const response = await fetch("/users/api/get-users");
+            try {
+                const response = await fetch("/users/api/get-users");
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch users");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch users");
+                }
+
+                const users = await response.json();
+                setData(users);
+                setLoading(false);
+            } catch (error) {
+                console.error("Failed to fetch users", error);
+                setLoading(false);
             }
-
-            setData(await response.json());
         };
 
         fetchUsers();
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- run on mount
     }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
