@@ -55,6 +55,10 @@ export function UserDataTable({ columns }: DataTableProps) {
         fetchUsers();
     }, []);
 
+    useEffect(() => {
+        console.log("datache changed", data);
+    }, [data]);
+
     if (loading) {
         return <div>Loading...</div>;
     }
