@@ -10,16 +10,16 @@ import {
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "@clerk/nextjs/api";
 import { useRouter } from "next/navigation";
 
 interface DataTableProps {
     columns: ColumnDef<User>[];
-    data: User[];
 }
 
-export function UserDataTable({ columns, data }: DataTableProps) {
+export function UserDataTable({ columns }: DataTableProps) {
+    const [data, setData] = useState<User[]>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const router = useRouter();
     const table = useReactTable({
@@ -32,6 +32,21 @@ export function UserDataTable({ columns, data }: DataTableProps) {
             columnFilters,
         },
     });
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const response = await fetch("/users/api/get-users");
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch users");
+            }
+
+            setData(await response.json());
+        };
+
+        fetchUsers();
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- run on mount
+    }, []);
 
     return (
         <>
