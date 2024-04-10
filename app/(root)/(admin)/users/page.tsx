@@ -5,6 +5,7 @@ import {
     flexRender,
     getCoreRowModel,
     getFilteredRowModel,
+    getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
@@ -31,6 +32,7 @@ const UsersPage = () => {
         getCoreRowModel: getCoreRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        // getPaginationRowModel: getPaginationRowModel(),
         state: {
             columnFilters,
         },
@@ -39,8 +41,8 @@ const UsersPage = () => {
     if (loading) return <div>Loading...</div>;
 
     return (
-        <>
-            <div className="flex items-center py-4">
+        <div className="w-full h-screen-100 max-h-screen-100 overflow-y-auto">
+            <div className="flex items-center pb-5">
                 <Input
                     placeholder="Filter by name..."
                     value={(table.getColumn("firstName")?.getFilterValue() as string) ?? ""}
@@ -72,7 +74,7 @@ const UsersPage = () => {
                         ))}
                     </TableHeader>
 
-                    <TableBody>
+                    <TableBody className="overflow-y-auto max-h-full">
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
                                 <TableRow
@@ -106,7 +108,7 @@ const UsersPage = () => {
                     </TableBody>
                 </Table>
             </div>
-        </>
+        </div>
     );
 };
 
