@@ -11,7 +11,7 @@ export const userTableColumns: ColumnDef<User>[] = [
         cell: ({ row }) => {
             const imageUrl = row.getValue("imageUrl") as string;
 
-            return <Image src={imageUrl} alt="profile img" width={24} height={24}></Image>;
+            return <Image className="rounded-full" src={imageUrl} alt="profile img" width={24} height={24}></Image>;
         },
     },
     {
