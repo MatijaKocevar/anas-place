@@ -20,7 +20,12 @@ const config = {
         },
         extend: {
             maxHeight: {
-                "screen-100": "calc(100vh - 9rem)",
+                "screen-9": "calc(100vh - 9rem)",
+                "screen-13": "calc(100vh - 13rem)",
+            },
+            height: {
+                "screen-9": "calc(100vh - 9rem)",
+                "screen-13": "calc(100vh - 13rem)",
             },
             fontFamily: {
                 sans: ["var(--font-sans)", ...fontFamily.sans],
