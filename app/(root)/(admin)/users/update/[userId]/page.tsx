@@ -3,6 +3,8 @@
 import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import useUserUpdate from "../../../../../../hooks/useUserUpdate";
+
 interface UpdateUserPageProps {
     params: {
         userId: string;
@@ -10,23 +12,8 @@ interface UpdateUserPageProps {
 }
 
 const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
-    const [user, setUser] = useState<User | null>(null);
     const [formData, setFormData] = useState<Partial<User>>({});
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const response = await fetch(`/users/api/get-user/${params.userId}`);
-
-            if (!response.ok) {
-                throw new Error("Failed to fetch user");
-            }
-
-            setUser(await response.json());
-        };
-
-        if (params.userId) fetchUser();
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- run on mount
-    }, [params.userId]);
+    const { user, updateUser } = useUserUpdate(params.userId);
 
     useEffect(() => {
         if (user) {
@@ -70,28 +57,11 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        try {
-            const endpoint = `/users/api/update-user/${params.userId}`;
-            const response = await fetch(endpoint, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to update user: " + response.statusText);
-            }
-
-            await response.json();
-        } catch (error) {
-            console.error("Error updating user:", error);
-        }
+        await updateUser(formData);
     };
 
     return (
-        <div className="flex w-full h-full">
+        <div className="flex w-full h-full overflow-y-auto">
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col justify-between w-full space-y-6 max-w-3xl mx-auto my-8 p-6 shadow-lg rounded-md bg-white"
@@ -102,9 +72,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                             <Image
                                 src={user?.imageUrl ?? ""}
                                 alt="Profile"
-                                className="rounded-full object-cover mb-4"
-                                width={200}
-                                height={200}
+                                className="rounded-full object-cover"
+                                width={150}
+                                height={150}
                             />
                         </div>
                     )}
@@ -112,7 +82,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
 
                 <div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">First Name</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">
+                            First Name
+                        </label>
                         <input
                             type="text"
                             name="firstName"
@@ -123,7 +95,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                         />
                     </div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">Last Name</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">
+                            Last Name
+                        </label>
                         <input
                             type="text"
                             name="lastName"
@@ -134,7 +108,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                         />
                     </div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">Username</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">
+                            Username
+                        </label>
                         <input
                             type="text"
                             name="username"
@@ -160,7 +136,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                         ))}
                     </div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2">Phone numbers</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2">
+                            Phone numbers
+                        </label>
                         {formData.phoneNumbers?.map((phoneNumber, index) => (
                             <input
                                 key={phoneNumber.id}

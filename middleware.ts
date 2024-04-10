@@ -1,19 +1,26 @@
 import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { roles } from "./constants/roles";
+
+const activeOrgId = process.env.CLERK_ACTIVE_ORGANIZATION_ID;
 
 export default authMiddleware({
-    afterAuth(auth, req, evt) {
+    afterAuth(auth, req) {
         if (!auth.userId && !auth.isPublicRoute) {
             return redirectToSignIn({ returnBackUrl: req.url });
         }
 
-        if (auth.userId) {
-            const userOrganizations = auth.sessionClaims.userOrganizations as { [orgId: string]: string };
-            const isAdminOfAnyOrg = Object.values(userOrganizations).some((role) => role === "org:all");
-            const protectedPaths = ["/users", "/receipts"];
-            const isAccessingProtectedRoute = protectedPaths.includes(req.nextUrl.pathname);
+        if (auth.userId && activeOrgId) {
+            const protectedPaths = ["/users", "/receipts", "/bookings"];
+            const isAccessingProtectedRoute = protectedPaths.some((protectedPath) =>
+                req.nextUrl.pathname.startsWith(protectedPath),
+            );
+            const userOrganizations = auth.sessionClaims.userOrganizations as {
+                [orgId: string]: string;
+            };
+            const isAdminInOrg = userOrganizations[activeOrgId] === roles.ALL;
 
-            if (isAccessingProtectedRoute && !isAdminOfAnyOrg) {
+            if (isAccessingProtectedRoute && !isAdminInOrg) {
                 const url = req.nextUrl.clone();
                 url.pathname = "/";
                 return NextResponse.rewrite(url);

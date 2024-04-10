@@ -4,16 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
-import { useSession } from "@clerk/nextjs";
-import { checkUserRole } from "../utils/userUtils";
-import { roles } from "../constants/roles";
+import { navigationLinks } from "../constants/navigation-links";
+import useUserRole from "../hooks/useUserRole";
 
 const MobileNav = () => {
     const pathname = usePathname();
-    const { session } = useSession();
-    const userRole = checkUserRole(session);
+    const { isAdmin } = useUserRole();
 
     return (
         <section className="w-full max-w-[264px]">
@@ -35,9 +32,9 @@ const MobileNav = () => {
                     <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
                         <SheetClose asChild>
                             <section className="flex h-full flex-col gap-6 pt-16 text-black">
-                                {sidebarLinks.map((link) => {
+                                {navigationLinks.map((link) => {
                                     const isActive = pathname === link.route;
-                                    const isLinkVisible = link.admin ? userRole === roles.ALL : true;
+                                    const isLinkVisible = link.admin ? isAdmin : true;
 
                                     return (
                                         <SheetClose asChild key={link.route}>
@@ -52,7 +49,12 @@ const MobileNav = () => {
                                                         }
                                                     )}
                                                 >
-                                                    <Image src={link.imgURL} alt={link.label} width={20} height={20} />
+                                                    <Image
+                                                        src={link.imgURL}
+                                                        alt={link.label}
+                                                        width={20}
+                                                        height={20}
+                                                    />
                                                     <p className="font-semibold">{link.label}</p>
                                                 </Link>
                                             ) : null}

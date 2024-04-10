@@ -1,5 +1,11 @@
+import { loremIpsumBig } from "../../../constants/loremIpsumBig";
+
 const HomePage = () => {
-    return <h1 className="text-black">Home</h1>;
+    return (
+        <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto">
+            <p className="text-black">{loremIpsumBig}</p>
+        </div>
+    );
 };
 
 export default HomePage;
