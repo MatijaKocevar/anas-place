@@ -6,12 +6,6 @@ export const navigationLinks = [
         admin: false,
     },
     {
-        imgURL: "/icons/upcoming.svg",
-        route: "/bookings",
-        label: "Bookings",
-        admin: true,
-    },
-    {
         imgURL: "/icons/gallery.svg",
         route: "/gallery",
         label: "Gallery",
@@ -22,6 +16,12 @@ export const navigationLinks = [
         route: "/services",
         label: "Services",
         admin: false,
+    },
+    {
+        imgURL: "/icons/upcoming.svg",
+        route: "/bookings",
+        label: "Bookings",
+        admin: true,
     },
     {
         imgURL: "/icons/receipt.svg",
