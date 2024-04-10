@@ -3,6 +3,7 @@
 import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+
 interface UpdateUserPageProps {
     params: {
         userId: string;
@@ -17,15 +18,13 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
         const fetchUser = async () => {
             const response = await fetch(`/users/api/get-user/${params.userId}`);
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch user");
-            }
+            if (!response.ok) throw new Error("Failed to fetch user");
 
-            setUser(await response.json());
+            const user = (await response.json()) as User;
+            setUser(user);
         };
 
         if (params.userId) fetchUser();
-        // eslint-disable-next-line react-hooks/exhaustive-deps -- run on mount
     }, [params.userId]);
 
     useEffect(() => {
@@ -44,7 +43,7 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
         index?: number,
-        type?: "emailAddresses" | "phoneNumbers",
+        type?: "emailAddresses" | "phoneNumbers"
     ) => {
         const { name, value } = e.target;
 
@@ -80,9 +79,7 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                 body: JSON.stringify(formData),
             });
 
-            if (!response.ok) {
-                throw new Error("Failed to update user: " + response.statusText);
-            }
+            if (!response.ok) throw new Error("Failed to update user: " + response.statusText);
 
             await response.json();
         } catch (error) {

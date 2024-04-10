@@ -6,12 +6,10 @@ const activeOrgSlug = process.env.NEXT_PUBLIC_CLERK_ACTIVE_SLUG;
 const useUserRole = () => {
     const { user, isLoaded, isSignedIn } = useUser();
 
-    if (!isLoaded || !isSignedIn || !user) {
-        return { role: null, isAdmin: false };
-    }
+    if (!isLoaded || !isSignedIn || !user) return { role: null, isAdmin: false };
 
     const activeOrg = user.organizationMemberships.find(
-        (membership) => membership.organization.slug === activeOrgSlug,
+        (membership) => membership.organization.slug === activeOrgSlug
     );
 
     if (activeOrg?.role) {
