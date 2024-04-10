@@ -37,7 +37,9 @@ const MobileNav = () => {
                             <section className="flex h-full flex-col gap-6 pt-16 text-black">
                                 {navigationLinks.map((link) => {
                                     const isActive = pathname === link.route;
-                                    const isLinkVisible = link.admin ? userRole === roles.ALL : true;
+                                    const isLinkVisible = link.admin
+                                        ? userRole === roles.ALL
+                                        : true;
 
                                     return (
                                         <SheetClose asChild key={link.route}>
@@ -49,10 +51,15 @@ const MobileNav = () => {
                                                         "flex gap-4 items-center p-4 rounded-lg w-full max-w-60",
                                                         {
                                                             "bg-accent-gold-1": isActive,
-                                                        }
+                                                        },
                                                     )}
                                                 >
-                                                    <Image src={link.imgURL} alt={link.label} width={20} height={20} />
+                                                    <Image
+                                                        src={link.imgURL}
+                                                        alt={link.label}
+                                                        width={20}
+                                                        height={20}
+                                                    />
                                                     <p className="font-semibold">{link.label}</p>
                                                 </Link>
                                             ) : null}

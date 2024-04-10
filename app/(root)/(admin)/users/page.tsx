@@ -12,7 +12,14 @@ import { userTableColumns } from "../../../../constants/user-table-columns";
 import React, { useEffect, useState } from "react";
 import { User } from "@clerk/nextjs/server";
 import { Input } from "../../../../components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../../components/ui/table";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "../../../../components/ui/table";
 
 const UsersPage = () => {
     const [data, setData] = useState<User[]>([]);
@@ -62,7 +69,9 @@ const UsersPage = () => {
                 <Input
                     placeholder="Filter by name..."
                     value={(table.getColumn("firstName")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) => table.getColumn("firstName")?.setFilterValue(event.target.value)}
+                    onChange={(event) =>
+                        table.getColumn("firstName")?.setFilterValue(event.target.value)
+                    }
                     className="max-w-sm"
                 />
             </div>
@@ -76,7 +85,10 @@ const UsersPage = () => {
                                         <TableHead key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
-                                                : flexRender(header.column.columnDef.header, header.getContext())}
+                                                : flexRender(
+                                                      header.column.columnDef.header,
+                                                      header.getContext(),
+                                                  )}
                                         </TableHead>
                                     );
                                 })}
@@ -95,7 +107,10 @@ const UsersPage = () => {
                                     {row.getVisibleCells().map((cell) => {
                                         return (
                                             <TableCell key={cell.id}>
-                                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext(),
+                                                )}
                                             </TableCell>
                                         );
                                     })}
@@ -103,7 +118,10 @@ const UsersPage = () => {
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={userTableColumns.length} className="h-24 text-center">
+                                <TableCell
+                                    colSpan={userTableColumns.length}
+                                    className="h-24 text-center"
+                                >
                                     No results.
                                 </TableCell>
                             </TableRow>

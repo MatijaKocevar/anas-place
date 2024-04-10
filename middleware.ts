@@ -13,9 +13,11 @@ export default authMiddleware({
         if (auth.userId && activeOrgId) {
             const protectedPaths = ["/users", "/receipts", "/bookings"];
             const isAccessingProtectedRoute = protectedPaths.some((protectedPath) =>
-                req.nextUrl.pathname.startsWith(protectedPath)
+                req.nextUrl.pathname.startsWith(protectedPath),
             );
-            const userOrganizations = auth.sessionClaims.userOrganizations as { [orgId: string]: string };
+            const userOrganizations = auth.sessionClaims.userOrganizations as {
+                [orgId: string]: string;
+            };
             const isAdminInOrg = userOrganizations[activeOrgId] === roles.ALL;
 
             if (isAccessingProtectedRoute && !isAdminInOrg) {

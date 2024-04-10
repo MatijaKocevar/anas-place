@@ -44,7 +44,7 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement>,
         index?: number,
-        type?: "emailAddresses" | "phoneNumbers"
+        type?: "emailAddresses" | "phoneNumbers",
     ) => {
         const { name, value } = e.target;
 
@@ -112,7 +112,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
 
                 <div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">First Name</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">
+                            First Name
+                        </label>
                         <input
                             type="text"
                             name="firstName"
@@ -123,7 +125,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                         />
                     </div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">Last Name</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">
+                            Last Name
+                        </label>
                         <input
                             type="text"
                             name="lastName"
@@ -134,7 +138,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                         />
                     </div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">Username</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2 capitalize">
+                            Username
+                        </label>
                         <input
                             type="text"
                             name="username"
@@ -160,7 +166,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                         ))}
                     </div>
                     <div className="flex flex-col my-2">
-                        <label className="text-lg font-semibold text-gray-700 mb-2">Phone numbers</label>
+                        <label className="text-lg font-semibold text-gray-700 mb-2">
+                            Phone numbers
+                        </label>
                         {formData.phoneNumbers?.map((phoneNumber, index) => (
                             <input
                                 key={phoneNumber.id}
