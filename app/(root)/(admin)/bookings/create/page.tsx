@@ -1,3 +1,9 @@
+import { loremIpsumBig } from "../../../../../constants/loremIpsumBig";
+
 export default function CreateBookingPage() {
-    return <h1>Create a booking</h1>;
+    return (
+        <div className="w-full h-screen-100 max-h-screen-100 overflow-y-auto">
+            <p className="text-black">{loremIpsumBig}</p>
+        </div>
+    );
 }
