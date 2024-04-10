@@ -1,16 +1,15 @@
-export const sidebarLinks = [
+export const navigationLinks = [
     {
         imgURL: "/icons/Home.svg",
         route: "/",
         label: "Home",
         admin: false,
-
     },
     {
         imgURL: "/icons/upcoming.svg",
         route: "/bookings",
         label: "Bookings",
-        admin: false,
+        admin: true,
     },
     {
         imgURL: "/icons/gallery.svg",
