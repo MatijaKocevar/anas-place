@@ -37,7 +37,7 @@ const Sidebar = () => {
                 {isOpen ? "<" : ">"}
             </button>
             <section
-                className={`sticky left-0 top-0 flex bg-primary-1 flex-col justify-between p-6 pt-28 max-lg:hidden lg:min-w-fit`}
+                className={`sticky h-screen left-0 top-0 flex bg-primary-1 flex-col justify-between p-6 pt-28 max-lg:hidden lg:min-w-fit`}
             >
                 <div className="flex flex-1 flex-col gap-6">
                     {navigationLinks.map((link) => {
