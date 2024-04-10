@@ -3,6 +3,7 @@
 import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import useUserUpdate from "../../../../../../hooks/useUserUpdate";
 
 interface UpdateUserPageProps {
     params: {
@@ -11,21 +12,8 @@ interface UpdateUserPageProps {
 }
 
 const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
-    const [user, setUser] = useState<User | null>(null);
     const [formData, setFormData] = useState<Partial<User>>({});
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const response = await fetch(`/users/api/get-user/${params.userId}`);
-
-            if (!response.ok) throw new Error("Failed to fetch user");
-
-            const user = (await response.json()) as User;
-            setUser(user);
-        };
-
-        if (params.userId) fetchUser();
-    }, [params.userId]);
+    const { user, updateUser } = useUserUpdate(params.userId);
 
     useEffect(() => {
         if (user) {
@@ -69,22 +57,7 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        try {
-            const endpoint = `/users/api/update-user/${params.userId}`;
-            const response = await fetch(endpoint, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (!response.ok) throw new Error("Failed to update user: " + response.statusText);
-
-            await response.json();
-        } catch (error) {
-            console.error("Error updating user:", error);
-        }
+        await updateUser(formData);
     };
 
     return (
