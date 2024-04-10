@@ -11,7 +11,6 @@ import useUserRole from "../hooks/useUserRole";
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true);
     const pathname = usePathname();
-
     const { isAdmin } = useUserRole();
 
     useEffect(() => {

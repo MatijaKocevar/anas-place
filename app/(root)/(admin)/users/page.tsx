@@ -48,6 +48,7 @@ const UsersPage = () => {
                 }
 
                 const users = await response.json();
+
                 setData(users);
                 setLoading(false);
             } catch (error) {
@@ -59,9 +60,7 @@ const UsersPage = () => {
         fetchUsers();
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    if (loading) return <div>Loading...</div>;
 
     return (
         <>
@@ -75,6 +74,7 @@ const UsersPage = () => {
                     className="max-w-sm"
                 />
             </div>
+
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
@@ -87,7 +87,7 @@ const UsersPage = () => {
                                                 ? null
                                                 : flexRender(
                                                       header.column.columnDef.header,
-                                                      header.getContext(),
+                                                      header.getContext()
                                                   )}
                                         </TableHead>
                                     );
@@ -95,6 +95,7 @@ const UsersPage = () => {
                             </TableRow>
                         ))}
                     </TableHeader>
+
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
@@ -109,7 +110,7 @@ const UsersPage = () => {
                                             <TableCell key={cell.id}>
                                                 {flexRender(
                                                     cell.column.columnDef.cell,
-                                                    cell.getContext(),
+                                                    cell.getContext()
                                                 )}
                                             </TableCell>
                                         );
