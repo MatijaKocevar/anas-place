@@ -8,10 +8,14 @@ export default authMiddleware({
         }
 
         if (auth.userId) {
+            const protectedPaths = ["/users", "/receipts", "/bookings"];
+
+            const isAccessingProtectedRoute = protectedPaths.some((protectedPath) =>
+                req.nextUrl.pathname.startsWith(protectedPath)
+            );
+
             const userOrganizations = auth.sessionClaims.userOrganizations as { [orgId: string]: string };
             const isAdminOfAnyOrg = Object.values(userOrganizations).some((role) => role === "org:all");
-            const protectedPaths = ["/users", "/receipts"];
-            const isAccessingProtectedRoute = protectedPaths.includes(req.nextUrl.pathname);
 
             if (isAccessingProtectedRoute && !isAdminOfAnyOrg) {
                 const url = req.nextUrl.clone();
