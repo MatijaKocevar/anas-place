@@ -5,17 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useSession } from "@clerk/nextjs";
-import { checkUserRole } from "../utils/userUtils";
-import { roles } from "../constants/roles";
 import { navigationLinks } from "../constants/navigation-links";
 import useUserRole from "../hooks/useUserRole";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true);
     const pathname = usePathname();
-    const { session } = useSession();
-    const userRole = checkUserRole(session);
 
     const { isAdmin } = useUserRole();
 
@@ -49,7 +44,7 @@ const Sidebar = () => {
                     {navigationLinks.map((link) => {
                         const isActive =
                             pathname === link.route || pathname.startsWith(`${link.route}/`);
-                        const isLinkVisible = link.admin ? userRole === roles.ALL : true;
+                        const isLinkVisible = link.admin ? isAdmin : true;
 
                         return isLinkVisible ? (
                             <Link
@@ -59,7 +54,7 @@ const Sidebar = () => {
                                     "flex gap-4 items-center p-4 rounded-lg justify-start",
                                     {
                                         "bg-accent-gold-1": isActive,
-                                    },
+                                    }
                                 )}
                             >
                                 <Image src={link.imgURL} alt={link.label} width={30} height={30} />

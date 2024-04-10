@@ -5,15 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { useSession } from "@clerk/nextjs";
-import { checkUserRole } from "../utils/userUtils";
-import { roles } from "../constants/roles";
 import { navigationLinks } from "../constants/navigation-links";
+import useUserRole from "../hooks/useUserRole";
 
 const MobileNav = () => {
     const pathname = usePathname();
-    const { session } = useSession();
-    const userRole = checkUserRole(session);
+    const { isAdmin } = useUserRole();
 
     return (
         <section className="w-full max-w-[264px]">
@@ -37,9 +34,7 @@ const MobileNav = () => {
                             <section className="flex h-full flex-col gap-6 pt-16 text-black">
                                 {navigationLinks.map((link) => {
                                     const isActive = pathname === link.route;
-                                    const isLinkVisible = link.admin
-                                        ? userRole === roles.ALL
-                                        : true;
+                                    const isLinkVisible = link.admin ? isAdmin : true;
 
                                     return (
                                         <SheetClose asChild key={link.route}>
@@ -51,7 +46,7 @@ const MobileNav = () => {
                                                         "flex gap-4 items-center p-4 rounded-lg w-full max-w-60",
                                                         {
                                                             "bg-accent-gold-1": isActive,
-                                                        },
+                                                        }
                                                     )}
                                                 >
                                                     <Image
