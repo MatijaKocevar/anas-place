@@ -61,7 +61,7 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
     };
 
     return (
-        <div className="flex w-full h-full">
+        <div className="flex w-full h-full overflow-y-auto">
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col justify-between w-full space-y-6 max-w-3xl mx-auto my-8 p-6 shadow-lg rounded-md bg-white"
@@ -72,9 +72,9 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
                             <Image
                                 src={user?.imageUrl ?? ""}
                                 alt="Profile"
-                                className="rounded-full object-cover mb-4"
-                                width={200}
-                                height={200}
+                                className="rounded-full object-cover"
+                                width={150}
+                                height={150}
                             />
                         </div>
                     )}
