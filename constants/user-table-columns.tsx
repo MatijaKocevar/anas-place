@@ -21,13 +21,22 @@ export const userTableColumns: ColumnDef<User>[] = [
                 ></Image>
             );
         },
+        maxSize: 150,
+        minSize: 50,
+        size: 100,
     },
     {
         accessorKey: "firstName",
         header: "First Name",
+        maxSize: 150,
+        minSize: 50,
+        size: 100,
     },
     {
         accessorKey: "lastName",
         header: "Last Name",
+        maxSize: 150,
+        minSize: 50,
+        size: 100,
     },
 ];
