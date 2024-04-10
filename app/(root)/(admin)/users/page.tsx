@@ -9,8 +9,7 @@ import {
 } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import { userTableColumns } from "../../../../constants/user-table-columns";
-import React, { useEffect, useState } from "react";
-import { User } from "@clerk/nextjs/server";
+import React, { useState } from "react";
 import { Input } from "../../../../components/ui/input";
 import {
     Table,
@@ -20,15 +19,14 @@ import {
     TableHeader,
     TableRow,
 } from "../../../../components/ui/table";
+import useUsers from "../../../../hooks/useUsers";
 
 const UsersPage = () => {
-    const [data, setData] = useState<User[]>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [loading, setLoading] = useState(true);
     const router = useRouter();
-
+    const { users, loading } = useUsers();
     const table = useReactTable({
-        data,
+        data: users,
         columns: userTableColumns,
         getCoreRowModel: getCoreRowModel(),
         onColumnFiltersChange: setColumnFilters,
@@ -37,28 +35,6 @@ const UsersPage = () => {
             columnFilters,
         },
     });
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await fetch("/users/api/get-users");
-
-                if (!response.ok) {
-                    throw new Error("Failed to fetch users");
-                }
-
-                const users = await response.json();
-
-                setData(users);
-                setLoading(false);
-            } catch (error) {
-                console.error("Failed to fetch users", error);
-                setLoading(false);
-            }
-        };
-
-        fetchUsers();
-    }, []);
 
     if (loading) return <div>Loading...</div>;
 
