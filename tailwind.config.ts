@@ -19,6 +19,9 @@ const config = {
             },
         },
         extend: {
+            maxHeight: {
+                "screen-100": "calc(100vh - 9rem)",
+            },
             fontFamily: {
                 sans: ["var(--font-sans)", ...fontFamily.sans],
             },
