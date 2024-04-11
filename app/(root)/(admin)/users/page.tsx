@@ -23,6 +23,7 @@ import {
 import useUsers from "../../../../hooks/useUsers";
 import { Button } from "../../../../components/ui/button";
 import useCalculateTablePageSize from "../../../../hooks/useCalculateTablePageSize";
+import Spinner from "../../../../components/ui/Spinner";
 
 const UsersPage = () => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -73,7 +74,13 @@ const UsersPage = () => {
         }
     }, [pageSize, users.length, pageIndex]);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) {
+        return (
+            <div className="flex justify-start flex-col h-screen-9 max-h-screen-9 overflow-hidden">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div className="flex justify-start flex-col h-screen-9 max-h-screen-9 overflow-hidden">
