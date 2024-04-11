@@ -3,16 +3,16 @@
 import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import useUserUpdate from "../../../../../../hooks/useUserUpdate";
-import Spinner from "../../../../../../components/ui/Spinner";
+import useUserUpdate from "../hooks/useUserUpdate";
+import Spinner from "./ui/Spinner";
 
-interface UpdateUserPageProps {
+export interface ProfileProps {
     params: {
         userId: string;
     };
 }
 
-const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
+const Profile = ({ params }: ProfileProps) => {
     const [formData, setFormData] = useState<Partial<User>>({});
     const { user, updateUser, loading } = useUserUpdate(params.userId);
 
@@ -176,4 +176,4 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
     );
 };
 
-export default UpdateUserPage;
+export default Profile;
