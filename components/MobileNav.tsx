@@ -39,16 +39,12 @@ const MobileNav = () => {
                                         pathname === link.route ||
                                         pathname.startsWith(`${link.route}/`);
                                     const isLinkVisible = link.admin ? isAdmin : true;
-                                    const route =
-                                        link.label === "Account"
-                                            ? `${link.route}/${user?.id}`
-                                            : link.route;
 
                                     return (
                                         <SheetClose asChild key={link.route}>
                                             {isLinkVisible ? (
                                                 <Link
-                                                    href={route}
+                                                    href={link.route}
                                                     key={link.label}
                                                     className={cn(
                                                         "flex gap-4 items-center p-4 rounded-lg w-full max-w-60",

@@ -1,9 +1,12 @@
-import { User } from "@clerk/nextjs/server";
+import { useUser } from "@clerk/nextjs";
+import { UserResource } from "@clerk/types";
 import { useEffect, useState } from "react";
 
 const useUserUpdate = (userId: string) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserResource | null>(null);
     const [loading, setLoading] = useState(true);
+
+    const { user: currentUser } = useUser();
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -12,27 +15,47 @@ const useUserUpdate = (userId: string) => {
                 throw new Error("No user ID provided");
             }
 
+            if (currentUser && userId === currentUser.id) {
+                setUser(currentUser);
+                setLoading(false);
+                return;
+            }
+
             try {
                 setLoading(true);
                 const response = await fetch(`/users/api/get-user/${userId}`);
 
-                if (!response.ok) throw new Error("Failed to fetch user");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch user");
+                }
 
-                const userData = (await response.json()) as User;
+                const userData = await response.json();
                 setUser(userData);
             } catch (error) {
-                throw new Error("Failed to fetch user");
+                console.error("Failed to fetch user: ", error);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchUser();
-    }, [userId]);
+    }, [userId, currentUser]);
 
-    const updateUser = async (formData: Partial<User>) => {
+    const updateUser = async (formData: Partial<UserResource>) => {
         try {
             setLoading(true);
+
+            if (currentUser && userId === currentUser.id) {
+                const updatedUser = await currentUser.update({
+                    firstName: formData.firstName ?? "",
+                    lastName: formData.lastName ?? "",
+                    username: formData.username ?? "",
+                });
+
+                setUser(updatedUser);
+                return;
+            }
+
             const endpoint = `/users/api/update-user/${userId}`;
             const response = await fetch(endpoint, {
                 method: "PATCH",
@@ -44,7 +67,8 @@ const useUserUpdate = (userId: string) => {
 
             if (!response.ok) throw new Error("Failed to update user: " + response.statusText);
 
-            await response.json();
+            const updatedUserData = (await response.json()) as UserResource;
+            setUser(updatedUserData);
         } catch (error) {
             throw new Error("Failed to update user");
         } finally {
