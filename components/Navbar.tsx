@@ -1,4 +1,4 @@
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import MobileNav from "./MobileNav";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,6 +16,12 @@ const Navbar = () => {
                     <SignedIn>
                         <UserButton afterSignOutUrl="/sign-in" />
                     </SignedIn>
+                    <SignedOut>
+                        <div className="flex w-full whitespace-nowrap">
+                            <SignInButton />
+                        </div>
+                    </SignedOut>
+
                     <MobileNav />
                 </div>
             </div>

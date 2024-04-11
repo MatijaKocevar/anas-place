@@ -7,11 +7,13 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navigationLinks } from "../constants/navigation-links";
 import useUserRole from "../hooks/useUserRole";
+import { useUser } from "@clerk/nextjs";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true);
     const pathname = usePathname();
     const { isAdmin } = useUserRole();
+    const { user } = useUser();
 
     useEffect(() => {
         const updateIsOpen = () => {
@@ -37,7 +39,7 @@ const Sidebar = () => {
                 {isOpen ? "<" : ">"}
             </button>
             <section
-                className={`sticky h-screen left-0 top-0 flex bg-primary-1 flex-col justify-between p-6 pt-28 max-lg:hidden lg:min-w-fit`}
+                className={`sticky h-screen left-0 top-0 flex bg-primary-1 flex-col justify-between p-6 pt-24 max-lg:hidden lg:min-w-fit`}
             >
                 <div className="flex flex-1 flex-col gap-6">
                     {navigationLinks.map((link) => {
