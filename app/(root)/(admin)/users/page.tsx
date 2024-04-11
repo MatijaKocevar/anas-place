@@ -150,9 +150,7 @@ const UsersPage = () => {
                                         className="table-body-row hover:bg-muted-1 cursor-pointer"
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
-                                        onClick={() =>
-                                            router.push(`/users/update/${row.original.id}`)
-                                        }
+                                        onClick={() => router.push(`/users/${row.original.id}`)}
                                     >
                                         {row.getVisibleCells().map((cell) => {
                                             return (
