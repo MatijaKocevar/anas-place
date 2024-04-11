@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import { userTableColumns } from "../../../../constants/user-table-columns";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../../../../components/ui/input";
 import {
     Table,
