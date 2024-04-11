@@ -4,6 +4,7 @@ import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import useUserUpdate from "../../../../../../hooks/useUserUpdate";
+import Spinner from "../../../../../../components/ui/Spinner";
 
 interface UpdateUserPageProps {
     params: {
@@ -13,7 +14,7 @@ interface UpdateUserPageProps {
 
 const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
     const [formData, setFormData] = useState<Partial<User>>({});
-    const { user, updateUser } = useUserUpdate(params.userId);
+    const { user, updateUser, loading } = useUserUpdate(params.userId);
 
     useEffect(() => {
         if (user) {
@@ -59,6 +60,14 @@ const UpdateUserPage = ({ params }: UpdateUserPageProps) => {
 
         await updateUser(formData);
     };
+
+    if (loading) {
+        return (
+            <div className="flex justify-start flex-col h-screen-9 max-h-screen-9 overflow-hidden">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div className="flex w-full h-full overflow-y-auto">
