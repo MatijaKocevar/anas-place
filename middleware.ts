@@ -5,6 +5,7 @@ import { roles } from "./constants/roles";
 const activeOrgId = process.env.CLERK_ACTIVE_ORGANIZATION_ID;
 
 export default authMiddleware({
+    publicRoutes: ["/", "/sign-in", "/sign-up", "/gallery", "/services"],
     afterAuth(auth, req) {
         if (!auth.userId && !auth.isPublicRoute) {
             return redirectToSignIn({ returnBackUrl: req.url });
@@ -13,7 +14,7 @@ export default authMiddleware({
         if (auth.userId && activeOrgId) {
             const protectedPaths = ["/users", "/receipts", "/bookings"];
             const isAccessingProtectedRoute = protectedPaths.some((protectedPath) =>
-                req.nextUrl.pathname.startsWith(protectedPath),
+                req.nextUrl.pathname.startsWith(protectedPath)
             );
             const userOrganizations = auth.sessionClaims.userOrganizations as {
                 [orgId: string]: string;
