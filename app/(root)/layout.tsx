@@ -12,7 +12,9 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
                 <Sidebar />
 
                 <section className="flex flex-1 flex-col px-6 mb-8 mt-28 max-md:pb-0 sm:px-14">
-                    <div className="w-full h-full">{children}</div>
+                    <div id="main-children-container" className="w-full h-full">
+                        {children}
+                    </div>
                 </section>
             </div>
         </main>
