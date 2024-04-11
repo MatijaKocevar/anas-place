@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import { userTableColumns } from "../../../../constants/user-table-columns";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../../../../components/ui/input";
 import {
     Table,
@@ -22,11 +22,24 @@ import {
 } from "../../../../components/ui/table";
 import useUsers from "../../../../hooks/useUsers";
 import { Button } from "../../../../components/ui/button";
+import useCalculateTablePageSize from "../../../../hooks/useCalculateTablePageSize";
 
 const UsersPage = () => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const router = useRouter();
     const { users, loading } = useUsers();
+    const [pageIndex, setPageIndex] = useState(0);
+    const tableOptionsRef = useRef<HTMLDivElement>(null);
+    const tableHeadRowRef = useRef<HTMLDivElement>(null);
+    const tableBodyRef = useRef<HTMLDivElement>(null);
+
+    const pageSize = useCalculateTablePageSize({
+        loading,
+        tableOptionsRef,
+        tableHeadRowRef,
+        tableBodyRef,
+    });
+
     const table = useReactTable({
         data: users,
         columns: userTableColumns,
@@ -36,21 +49,36 @@ const UsersPage = () => {
         getPaginationRowModel: getPaginationRowModel(),
         state: {
             columnFilters,
+            pagination: {
+                pageIndex,
+                pageSize,
+            },
         },
         initialState: {
             pagination: {
-                pageSize: 15,
+                pageSize,
             },
             columnFilters,
         },
     });
 
+    useEffect(() => {
+        const totalRows = users.length;
+
+        const totalPages = pageSize > 0 ? Math.ceil(totalRows / pageSize) : 0;
+
+        if (pageIndex + 1 > totalPages) {
+            const newPageIndex = Math.max(0, totalPages - 1);
+            setPageIndex(newPageIndex);
+        }
+    }, [pageSize, users.length, pageIndex]);
+
     if (loading) return <div>Loading...</div>;
 
     return (
-        <div className="flex justify-around flex-col h-screen-9 max-h-screen-9 overflow-hidden">
-            <div className="flex justify-between items-center py-2">
-                <div className="">
+        <div className="flex justify-start flex-col h-screen-9 max-h-screen-9 overflow-hidden">
+            <div ref={tableOptionsRef} className="flex justify-between items-center py-2 pb-4">
+                <div>
                     <Input
                         placeholder="Filter by name..."
                         value={(table.getColumn("firstName")?.getFilterValue() as string) ?? ""}
@@ -64,7 +92,7 @@ const UsersPage = () => {
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => table.previousPage()}
+                        onClick={() => setPageIndex(pageIndex - 1)}
                         disabled={!table.getCanPreviousPage()}
                     >
                         Previous
@@ -72,7 +100,7 @@ const UsersPage = () => {
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => table.nextPage()}
+                        onClick={() => setPageIndex(pageIndex + 1)}
                         disabled={!table.getCanNextPage()}
                     >
                         Next
@@ -80,7 +108,7 @@ const UsersPage = () => {
                 </div>
             </div>
             <div className="rounded-md border overflow-auto">
-                <div className="sticky top-0 z-50">
+                <div ref={tableHeadRowRef} className="sticky top-0 z-50">
                     <Table>
                         <TableHeader>
                             {table.getHeaderGroups().map((headerGroup) => (
@@ -106,13 +134,13 @@ const UsersPage = () => {
                     </Table>
                 </div>
 
-                <div className="overflow-auto">
+                <div ref={tableBodyRef} className="overflow-auto">
                     <Table>
                         <TableBody>
                             {table.getRowModel().rows?.length ? (
                                 table.getRowModel().rows.map((row) => (
                                     <TableRow
-                                        className="hover:bg-muted-1 cursor-pointer"
+                                        className="table-body-row hover:bg-muted-1 cursor-pointer"
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
                                         onClick={() =>
