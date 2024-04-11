@@ -1,10 +1,10 @@
 "use client";
 
-import { User } from "@clerk/nextjs/server";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import useUserUpdate from "../hooks/useUserUpdate";
 import Spinner from "./ui/Spinner";
+import { UserResource } from "@clerk/types";
 
 export interface ProfileProps {
     params: {
@@ -13,7 +13,7 @@ export interface ProfileProps {
 }
 
 const Profile = ({ params }: ProfileProps) => {
-    const [formData, setFormData] = useState<Partial<User>>({});
+    const [formData, setFormData] = useState<Partial<UserResource>>({});
     const { user, updateUser, loading } = useUserUpdate(params.userId);
 
     useEffect(() => {
