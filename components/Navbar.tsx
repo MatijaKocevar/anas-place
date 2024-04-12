@@ -12,7 +12,7 @@ const Navbar = () => {
                     <p className="text-[26px] font-extrabold text-black">Ana&apos;s place</p>
                 </Link>
 
-                <div className="flex justify-between gap-5">
+                <div className="flex justify-between items-center gap-5">
                     <SignedIn>
                         <UserButton afterSignOutUrl="/sign-in" />
                     </SignedIn>
