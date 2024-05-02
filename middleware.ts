@@ -19,7 +19,7 @@ export default authMiddleware({
             const userOrganizations = auth.sessionClaims.userOrganizations as {
                 [orgId: string]: string;
             };
-            const isAdminInOrg = userOrganizations[activeOrgId] === roles.ALL;
+            const isAdminInOrg = userOrganizations[activeOrgId] === roles.ADMIN;
 
             if (isAccessingProtectedRoute && !isAdminInOrg) {
                 const url = req.nextUrl.clone();
