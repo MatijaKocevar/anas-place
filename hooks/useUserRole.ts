@@ -14,7 +14,7 @@ const useUserRole = () => {
 
     if (activeOrg?.role) {
         const role = activeOrg.role.toLowerCase();
-        const isAdmin = role === roles.ALL;
+        const isAdmin = role === roles.ADMIN;
 
         return { role, isAdmin };
     }
