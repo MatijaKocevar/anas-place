@@ -1,4 +1,4 @@
-import Profile, { ProfileProps } from "../../../../../components/Profile";
+import Profile, { ProfileProps } from "../../../../_components/Profile";
 
 const UpdateUserPage = ({ params }: ProfileProps) => {
     return <Profile params={params} />;
