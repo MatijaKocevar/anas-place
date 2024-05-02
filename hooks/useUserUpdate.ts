@@ -23,7 +23,7 @@ const useUserUpdate = (userId: string) => {
 
             try {
                 setLoading(true);
-                const response = await fetch(`/users/api/get-user/${userId}`);
+                const response = await fetch(`/api/users/get-user/${userId}`);
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch user");
@@ -56,7 +56,7 @@ const useUserUpdate = (userId: string) => {
                 return;
             }
 
-            const endpoint = `/users/api/update-user/${userId}`;
+            const endpoint = `/api/users/update-user/${userId}`;
             const response = await fetch(endpoint, {
                 method: "PATCH",
                 headers: {
