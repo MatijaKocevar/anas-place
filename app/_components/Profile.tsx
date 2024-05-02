@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import useUserUpdate from "../hooks/useUserUpdate";
-import Spinner from "./ui/Spinner";
+import useUserUpdate from "../../hooks/useUserUpdate";
+import Spinner from "../../components/ui/Spinner";
 import { UserResource } from "@clerk/types";
 
 export interface ProfileProps {
