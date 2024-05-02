@@ -7,13 +7,11 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navigationLinks } from "../constants/navigation-links";
 import useUserRole from "../hooks/useUserRole";
-import { useUser } from "@clerk/nextjs";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true);
     const pathname = usePathname();
     const { isAdmin } = useUserRole();
-    const { user } = useUser();
 
     useEffect(() => {
         const updateIsOpen = () => {

@@ -1,9 +1,9 @@
-import { loremIpsumBig } from "../../../constants/loremIpsumBig";
+import Gallery from "../../_components/Gallery";
 
 const GalleryPage = () => {
     return (
         <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto">
-            <p className="text-black">{loremIpsumBig}</p>
+            <Gallery />
         </div>
     );
 };

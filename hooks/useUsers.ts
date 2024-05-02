@@ -9,7 +9,7 @@ const useUsers = () => {
         const fetchUsers = async () => {
             setLoading(true);
             try {
-                const response = await fetch("/users/api/get-users");
+                const response = await fetch("/api/users/get-users");
 
                 if (!response.ok) throw new Error("Failed to fetch users");
 

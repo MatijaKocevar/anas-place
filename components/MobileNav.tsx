@@ -7,12 +7,10 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/s
 import { cn } from "@/lib/utils";
 import { navigationLinks } from "../constants/navigation-links";
 import useUserRole from "../hooks/useUserRole";
-import { useUser } from "@clerk/nextjs";
 
 const MobileNav = () => {
     const pathname = usePathname();
     const { isAdmin } = useUserRole();
-    const { user } = useUser();
 
     return (
         <section className="w-full max-w-[264px]">

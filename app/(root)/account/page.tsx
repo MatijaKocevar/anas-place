@@ -1,5 +1,5 @@
 import React from "react";
-import Profile from "../../../components/Profile";
+import Profile from "../../_components/Profile";
 import { auth } from "@clerk/nextjs";
 
 const ProfilePage = () => {
