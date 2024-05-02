@@ -24,12 +24,19 @@ const Gallery = () => {
 
                     return (
                         <div key={post.id} className="bg-white shadow rounded overflow-hidden">
-                            <Image
+                            {/* <Image
                                 width={500}
                                 height={500}
                                 src={post.media_url}
                                 alt={post.caption}
                                 priority
+                                className="w-full h-auto"
+                            /> */}
+                            <img
+                                width={500}
+                                height={500}
+                                src={post.media_url}
+                                alt={post.caption}
                                 className="w-full h-auto"
                             />
                             <div className="p-4">
