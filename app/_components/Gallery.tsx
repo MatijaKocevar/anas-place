@@ -29,6 +29,7 @@ const Gallery = () => {
                                 height={500}
                                 src={post.media_url}
                                 alt={post.caption}
+                                priority
                                 className="w-full h-auto"
                             />
                             <div className="p-4">
