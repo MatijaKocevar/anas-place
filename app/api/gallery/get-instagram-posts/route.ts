@@ -12,7 +12,7 @@ export type InstagramPost = {
     permalink: string;
 };
 
-export async function GET(request: Request) {
+export async function GET() {
     try {
         const result = await axios.get(`${INSTAGRAM_API_URL}/me/media`, {
             params: {
@@ -21,13 +21,11 @@ export async function GET(request: Request) {
             },
         });
 
-        request.headers.set("Cache-Control", "public, max-age=0, s-maxage=0");
-
         const posts = result.data;
 
         return Response.json(posts.data);
     } catch (error) {
         console.error("Error fetching Instagram posts:", error);
-        return null;
+        return new Response(null, { status: 404 });
     }
 }
