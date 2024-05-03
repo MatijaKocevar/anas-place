@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import useInstagramPosts from "../../hooks/useInstagramPosts";
 import Spinner from "../../components/ui/Spinner";
 
@@ -24,14 +23,7 @@ const Gallery = () => {
 
                     return (
                         <div key={post.id} className="bg-white shadow rounded overflow-hidden">
-                            {/* <Image
-                                width={500}
-                                height={500}
-                                src={post.media_url}
-                                alt={post.caption}
-                                priority
-                                className="w-full h-auto"
-                            /> */}
+                            {/* TODO: Use next/image when figuring out why it doesnt load */}
                             <img
                                 width={500}
                                 height={500}
