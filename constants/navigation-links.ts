@@ -35,10 +35,4 @@ export const navigationLinks = [
         label: "Users",
         admin: true,
     },
-    {
-        imgURL: "/icons/user.svg",
-        route: "/account",
-        label: "Account",
-        admin: false,
-    },
 ];

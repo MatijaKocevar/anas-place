@@ -5,14 +5,21 @@ import { roles } from "./constants/roles";
 const activeOrgId = process.env.CLERK_ACTIVE_ORGANIZATION_ID;
 
 export default authMiddleware({
-    publicRoutes: ["/", "/sign-in", "/sign-up", "/gallery", "/api/gallery", "/services"],
+    publicRoutes: [
+        "/",
+        "/sign-in",
+        "/sign-up",
+        "/gallery",
+        "/api/gallery/get-instagram-posts",
+        "/services",
+    ],
     afterAuth(auth, req) {
         if (!auth.userId && !auth.isPublicRoute) {
             return redirectToSignIn({ returnBackUrl: req.url });
         }
 
         if (auth.userId && activeOrgId) {
-            const protectedPaths = ["/users", "/api/users", "/receipts", "/bookings"];
+            const protectedPaths = ["/users", "/api", "/receipts", "/bookings"];
             const isAccessingProtectedRoute = protectedPaths.some((protectedPath) =>
                 req.nextUrl.pathname.startsWith(protectedPath)
             );
