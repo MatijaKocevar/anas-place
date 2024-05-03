@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { InstagramPost } from "../app/api/gallery/get-instagram-posts/route";
 
 const useInstagramPosts = () => {
@@ -16,7 +16,7 @@ const useInstagramPosts = () => {
                 const posts = (await response.json()) as InstagramPost[];
                 setInstagramPosts(posts);
             } catch (error) {
-                throw new Error("Failed to fetch instagram posts");
+                console.error("Failed to fetch instagram posts", error);
             } finally {
                 setLoading(false);
             }
