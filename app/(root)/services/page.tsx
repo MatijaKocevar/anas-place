@@ -1,8 +1,8 @@
 const ServicesPage = () => {
     return (
-        <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto flex flex-col justify-center">
+        <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto flex flex-col justify-center text-center">
             <h1 className="text-3xl font-bold text-black mb-4">Our Services</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mx-auto">
                 <div className="service-card p-4 shadow-lg rounded-lg">
                     <h2 className="text-xl font-bold text-black">Manicure</h2>
                     <p className="text-black">
