@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const INSTAGRAM_API_URL = "https://graph.instagram.com";
-const ACCESS_TOKEN =
-    "IGQWRPb2ZAVRG1CS0huVXNnRW1sdy1mbEtCSXMxQlpvTlJnanNZAQmV1YWktR2tsMkVEQ0RDWk1VLVdwdS1lTU1iZAk1XVjZAoc3VmM2l1bTJCMnR0NFFNbVdScmprcEVheHpNTDFPdUJ2NkJHUmlhNWVISkVaWENnNFkZD";
+const INSTAGRAM_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN;
 
 export type InstagramPost = {
     id: string;
@@ -12,20 +10,20 @@ export type InstagramPost = {
     permalink: string;
 };
 
-export async function GET() {
+export async function GET(request: Request) {
+    const nextPageUrl = new URL(request.url).searchParams.get("nextPageUrl");
+
+    const url =
+        nextPageUrl ??
+        `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink&access_token=${INSTAGRAM_ACCESS_TOKEN}`;
+
     try {
-        const result = await axios.get(`${INSTAGRAM_API_URL}/me/media`, {
-            params: {
-                fields: "id,caption,media_type,media_url,permalink",
-                access_token: ACCESS_TOKEN,
-            },
-        });
+        const response = await axios.get(url);
+        const data = response.data;
 
-        const posts = result.data;
-
-        return Response.json(posts.data);
+        return new Response(JSON.stringify(data), { status: 200 });
     } catch (error) {
         console.error("Error fetching Instagram posts:", error);
-        return new Response(null, { status: 404 });
+        return new Response(null, { status: 500 });
     }
 }
