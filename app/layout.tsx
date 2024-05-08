@@ -11,7 +11,7 @@ export const metadata = {
     openGraph: {
         images: [
             {
-                url: "/public/icons/logo.svg",
+                url: "/public/icons/logo.png",
                 width: 1200,
                 height: 630,
                 alt: "An image that best represents Ana's place",
