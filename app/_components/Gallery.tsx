@@ -39,8 +39,11 @@ const Gallery = () => {
                 Gallery
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-                {instagramPosts.map((post) => (
-                    <div key={post.id} className="bg-white shadow rounded-2xl overflow-hidden">
+                {instagramPosts.map((post, index) => (
+                    <div
+                        key={post.id + index}
+                        className="bg-white shadow rounded-2xl overflow-hidden"
+                    >
                         <div className="relative w-full aspect-w-1 aspect-h-1">
                             <img
                                 loading="lazy"
@@ -51,14 +54,14 @@ const Gallery = () => {
                         </div>
                         <div className="p-4">
                             <p className="text-sm">{post.caption}</p>
-                            <a
+                            {/* <a
                                 href={post.permalink}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-500 hover:text-blue-600 transition duration-300 ease-in-out"
                             >
                                 View on Instagram
-                            </a>
+                            </a> */}
                         </div>
                     </div>
                 ))}
