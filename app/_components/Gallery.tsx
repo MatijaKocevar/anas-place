@@ -37,7 +37,10 @@ const Gallery = () => {
         <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
                 {instagramPosts.map((post, index) => (
-                    <div key={post.id} className="bg-white shadow rounded-2xl overflow-hidden">
+                    <div
+                        key={post.id + index}
+                        className="bg-white shadow rounded-2xl overflow-hidden"
+                    >
                         <BlurImage
                             image={{
                                 href: post.permalink,
