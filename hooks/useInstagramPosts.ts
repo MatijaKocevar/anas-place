@@ -19,7 +19,15 @@ const useInstagramPosts = () => {
             if (!response.ok) throw new Error("Failed to fetch Instagram posts");
 
             const postsData = await response.json();
-            setInstagramPosts((prev) => [...prev, ...postsData.data]);
+
+            setInstagramPosts((prevPosts) => {
+                const existingPostIds = new Set(prevPosts.map((p) => p.id));
+                const filteredNewPosts = (postsData.data as InstagramPost[]).filter(
+                    (post) => !existingPostIds.has(post.id)
+                );
+                return [...prevPosts, ...filteredNewPosts];
+            });
+
             setNextPageUrl(postsData.paging?.next || null);
         } catch (error) {
             console.error("Failed to fetch Instagram posts", error);
