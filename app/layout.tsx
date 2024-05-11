@@ -10,7 +10,7 @@ export const metadata = {
     title: "Ana's place",
     description: "Ana's place is a place where you can book services and manage your bookings.",
     openGraph: {
-        images: "/public/icons/logo.png",
+        images: "public/icons/logo.png",
     },
 };
 
