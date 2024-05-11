@@ -86,9 +86,14 @@ const config = {
                 "accordion-up": "accordion-up 0.2s ease-out",
                 spin: "spin 1s linear infinite",
             },
+            scrollbar: ["rounded"],
         },
     },
-    plugins: [require("tailwindcss-animate"), require("@tailwindcss/aspect-ratio")],
+    plugins: [
+        require("tailwindcss-animate"),
+        require("@tailwindcss/aspect-ratio"),
+        require("tailwind-scrollbar"),
+    ],
 } satisfies Config;
 
 export default config;
