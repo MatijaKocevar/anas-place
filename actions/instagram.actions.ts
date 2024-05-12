@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { getCurrentInstagramToken } from "../data/instagram-service";
-import { InstagramPost } from "../app/api/gallery/get-instagram-posts/route";
+import { InstagramPost } from "../app/_components/Gallery";
 
 export interface InstagramResponseData {
     data: InstagramPost[];
