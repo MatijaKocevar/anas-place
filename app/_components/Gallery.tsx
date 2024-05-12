@@ -1,20 +1,65 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import useInstagramPosts from "../../hooks/useInstagramPosts";
+import React, { useEffect, useRef, useState } from "react";
 import BlurImage from "../../components/BlurImage";
 import Spinner from "../../components/ui/Spinner";
+import { getInitialInstagramPosts, getMoreInstagramPosts } from "../../actions/instagram.actions";
+
+export type InstagramPost = {
+    id: string;
+    caption: string;
+    media_type: string;
+    media_url: string;
+    permalink: string;
+};
 
 const Gallery = () => {
-    const { instagramPosts, loading, isFetchingMore, loadMore } = useInstagramPosts();
+    const [isLoading, setIsLoading] = useState(true);
+    const [instagramPosts, setInstagramPosts] = useState<InstagramPost[]>([]);
+    const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+
     const observerRef = useRef<HTMLDivElement | null>(null);
+
+    const fetchInitialInstagramPosts = async () => {
+        try {
+            const response = await getInitialInstagramPosts();
+
+            setNextPageUrl(response.paging.next);
+            setInstagramPosts(response.data);
+        } catch (error) {
+            console.error("Failed to fetch Instagram posts", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchMoreInstagramPosts = async (url: string) => {
+        try {
+            const response = await getMoreInstagramPosts(url);
+
+            setNextPageUrl(response.paging.next);
+            setInstagramPosts((prevPosts) => {
+                const existingPostIds = new Set(prevPosts.map((p) => p.id));
+                const filteredNewPosts = response.data.filter(
+                    (post) => !existingPostIds.has(post.id)
+                );
+                return [...prevPosts, ...filteredNewPosts];
+            });
+        } catch (error) {
+            console.error("Failed to fetch more Instagram posts", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchInitialInstagramPosts();
+    }, []);
 
     useEffect(() => {
         if (observerRef.current) {
             const observer = new IntersectionObserver(
                 (entries) => {
-                    if (entries[0].isIntersecting && !isFetchingMore) {
-                        loadMore();
+                    if (entries[0].isIntersecting && !isLoading && nextPageUrl) {
+                        fetchMoreInstagramPosts(nextPageUrl);
                     }
                 },
                 { threshold: 0.1 }
@@ -23,15 +68,7 @@ const Gallery = () => {
             observer.observe(observerRef.current);
             return () => observer.disconnect();
         }
-    }, [isFetchingMore, loadMore]);
-
-    if (loading && !isFetchingMore) {
-        return (
-            <div className="flex justify-start flex-col h-screen-9 max-h-screen-9 overflow-hidden">
-                <Spinner />
-            </div>
-        );
-    }
+    }, [nextPageUrl, isLoading]);
 
     return (
         <>
@@ -52,7 +89,7 @@ const Gallery = () => {
                 ))}
             </div>
             <div ref={observerRef} className="text-center py-8">
-                {isFetchingMore && <Spinner />}
+                {isLoading && <Spinner />}
             </div>
         </>
     );
