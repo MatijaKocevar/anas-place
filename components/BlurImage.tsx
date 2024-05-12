@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/legacy/image";
 import { cn } from "../lib/utils";
-import Spinner from "./ui/Spinner";
 
 type Image = {
     href: string;
@@ -11,8 +10,6 @@ type Image = {
 
 const BlurImage = ({ image }: { image: Image }) => {
     const [isLoading, setLoading] = useState(true);
-
-    // console.log(image);
 
     return (
         <a href={image.href}>
@@ -34,7 +31,6 @@ const BlurImage = ({ image }: { image: Image }) => {
                     )}
                     onLoad={() => setLoading(false)}
                 />
-                {isLoading && <Spinner />}
             </div>
         </a>
     );
