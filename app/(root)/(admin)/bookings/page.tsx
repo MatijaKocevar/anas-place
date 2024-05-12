@@ -65,7 +65,7 @@ export default function BookingsPage() {
         };
 
         fetchAppointments();
-    }, [view]);
+    }, [view, timeSlots]);
 
     const handleViewChange = (newView: "day" | "week" | "month") => {
         setView(newView);

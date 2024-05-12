@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const INSTAGRAM_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN;
+import { getCurrentInstagramToken } from "../../../../data/instagram-service";
 
 export type InstagramPost = {
     id: string;
@@ -11,11 +10,15 @@ export type InstagramPost = {
 };
 
 export async function GET(request: Request) {
+    const instagramToken = await getCurrentInstagramToken();
+
+    console.log("Instagram token:", instagramToken);
+
     const nextPageUrl = new URL(request.url).searchParams.get("nextPageUrl");
 
     const url =
         nextPageUrl ??
-        `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink&access_token=${INSTAGRAM_ACCESS_TOKEN}`;
+        `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink&access_token=${instagramToken}`;
 
     try {
         const response = await axios.get(url);
