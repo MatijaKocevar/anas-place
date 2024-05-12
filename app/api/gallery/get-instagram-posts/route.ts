@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getCurrentInstagramToken } from "../../../../data/instagram-service";
+import { NextResponse } from "next/server";
 
 export type InstagramPost = {
     id: string;
@@ -12,8 +13,6 @@ export type InstagramPost = {
 export async function GET(request: Request) {
     const instagramToken = await getCurrentInstagramToken();
 
-    console.log("Instagram token:", instagramToken);
-
     const nextPageUrl = new URL(request.url).searchParams.get("nextPageUrl");
 
     const url =
@@ -24,9 +23,9 @@ export async function GET(request: Request) {
         const response = await axios.get(url);
         const data = response.data;
 
-        return new Response(JSON.stringify(data), { status: 200 });
+        return new NextResponse(JSON.stringify(data), { status: 200 });
     } catch (error) {
         console.error("Error fetching Instagram posts:", error);
-        return new Response(null, { status: 500 });
+        return new NextResponse(null, { status: 500 });
     }
 }
