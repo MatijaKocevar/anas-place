@@ -1,10 +1,11 @@
 import { clerkApi } from "@clerk/nextjs/edge-middlewarefiles";
 import { UserResource } from "@clerk/types";
+import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request, { params }: { params: { userId: string } }) {
     const body = (await req.json()) as Partial<UserResource>;
 
-    if (!body) return new Response(null, { status: 400 });
+    if (!body) return new NextResponse(null, { status: 400 });
 
     const { firstName, lastName, username } = body;
 
@@ -15,8 +16,8 @@ export async function PATCH(req: Request, { params }: { params: { userId: string
     });
 
     if (!updatedUser) {
-        return new Response(null, { status: 404 });
+        return new NextResponse(null, { status: 404 });
     }
 
-    return Response.json(updatedUser);
+    return new NextResponse(JSON.stringify(updatedUser));
 }
