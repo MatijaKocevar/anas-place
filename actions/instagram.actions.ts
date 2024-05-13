@@ -20,13 +20,25 @@ export const getInitialInstagramPosts = async () => {
 
     const url = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink&access_token=${instagramToken}`;
 
-    const response = await axios.get(url);
+    const response = await fetch(url);
 
-    return response.data as InstagramResponseData;
+    if (!response.ok) {
+        throw new Error("Failed to fetch Instagram posts");
+    }
+
+    const data = (await response.json()) as InstagramResponseData;
+
+    return data;
 };
 
 export const getMoreInstagramPosts = async (nextPageUrl: string) => {
-    const response = await axios.get(nextPageUrl);
+    const response = await fetch(nextPageUrl);
 
-    return response.data as InstagramResponseData;
+    if (!response.ok) {
+        throw new Error("Failed to fetch Instagram posts");
+    }
+
+    const data = (await response.json()) as InstagramResponseData;
+
+    return data;
 };
