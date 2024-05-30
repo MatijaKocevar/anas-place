@@ -17,7 +17,6 @@ const BlurImage = ({ image }: { image: Image }) => {
         <a href={image.href}>
             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 ">
                 <Image
-                    unoptimized
                     alt=""
                     src={image.imageSrc}
                     layout="fill"
