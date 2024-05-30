@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import BlurImage from "../../components/BlurImage";
-import Spinner from "../../components/ui/Spinner";
 import { getInitialInstagramPosts, getMoreInstagramPosts } from "../../actions/instagram.actions";
+import Spinner from "../../components/ui/Spinner";
 
 export type InstagramPost = {
     id: string;
