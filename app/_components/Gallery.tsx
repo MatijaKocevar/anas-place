@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import BlurImage from "../../components/BlurImage";
-import { getInitialInstagramPosts, getMoreInstagramPosts } from "../../actions/instagram.actions";
+import { getMoreInstagramPosts } from "../../actions/instagram.actions";
 import Spinner from "../../components/ui/Spinner";
 
 export type InstagramPost = {
@@ -13,27 +13,26 @@ export type InstagramPost = {
     permalink: string;
 };
 
-const Gallery = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [instagramPosts, setInstagramPosts] = useState<InstagramPost[]>([]);
-    const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+export interface InstagramResponseData {
+    data: InstagramPost[];
+    paging: {
+        cursors: {
+            before: string;
+            after: string;
+        };
+        next: string;
+    };
+}
+
+const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [instagramPosts, setInstagramPosts] = useState<InstagramPost[]>(initialData.data);
+    const [nextPageUrl, setNextPageUrl] = useState<string | null>(initialData.paging.next);
 
     const observerRef = useRef<HTMLDivElement | null>(null);
 
-    const fetchInitialInstagramPosts = async () => {
-        try {
-            const response = await getInitialInstagramPosts();
-
-            setNextPageUrl(response.paging.next);
-            setInstagramPosts(response.data);
-        } catch (error) {
-            console.error("Failed to fetch Instagram posts", error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     const fetchMoreInstagramPosts = async (url: string) => {
+        setIsLoading(true);
         try {
             const response = await getMoreInstagramPosts(url);
 
@@ -47,12 +46,10 @@ const Gallery = () => {
             });
         } catch (error) {
             console.error("Failed to fetch more Instagram posts", error);
+        } finally {
+            setIsLoading(false);
         }
     };
-
-    useEffect(() => {
-        fetchInitialInstagramPosts();
-    }, []);
 
     useEffect(() => {
         if (observerRef.current) {
