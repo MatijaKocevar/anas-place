@@ -1,12 +1,17 @@
-import { getInitialInstagramPosts } from "../../../actions/instagram.actions";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getQueryClient } from "../../../utils/get-query-client";
 import Gallery from "../../_components/Gallery";
+import { fetchInstagramPosts } from "../../_utils/instagram";
 
 const GalleryPage = async () => {
-    const initialData = await getInitialInstagramPosts();
+    const queryClient = getQueryClient();
+    const posts = await fetchInstagramPosts();
 
     return (
         <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto hidden-scrollbar">
-            <Gallery initialData={initialData} />
+            <HydrationBoundary state={dehydrate(queryClient)}>
+                <Gallery initialData={posts} />
+            </HydrationBoundary>
         </div>
     );
 };
