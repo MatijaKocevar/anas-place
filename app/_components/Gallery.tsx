@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import BlurImage from "../../components/BlurImage";
 import { useEffect, useRef } from "react";
 import Spinner from "../../components/ui/Spinner";
-import { fetchInstagramPosts, InstagramResponseData } from "../_utils/instagram";
+import { fetchInstagramPosts, InstagramResponseData } from "../actions/instagram";
 
 export type InstagramPost = {
     id: string;

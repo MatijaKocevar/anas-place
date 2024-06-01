@@ -1,10 +1,10 @@
 "use client";
 
-import { User } from "@clerk/nextjs/api";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
+import { ClerkUser } from "../app/actions/users";
 
-export const userTableColumns: ColumnDef<User>[] = [
+export const userTableColumns: ColumnDef<ClerkUser>[] = [
     {
         accessorKey: "imageUrl",
         header: "Image",
