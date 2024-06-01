@@ -1,5 +1,6 @@
 import { User } from "@clerk/nextjs/server";
 import { useState, useEffect } from "react";
+import { getUsers } from "../app/actions/users";
 
 const useUsers = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -8,18 +9,11 @@ const useUsers = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             setLoading(true);
-            try {
-                const response = await fetch("/api/users/get-users");
+            const users = await getUsers();
 
-                if (!response.ok) throw new Error("Failed to fetch users");
+            if (!users) throw new Error("Failed to fetch users");
 
-                const users = await response.json();
-                setUsers(users);
-            } catch (error) {
-                throw new Error("Failed to fetch users");
-            } finally {
-                setLoading(false);
-            }
+            setUsers(users);
         };
 
         fetchUsers();
