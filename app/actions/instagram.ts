@@ -1,3 +1,5 @@
+"use server";
+
 import { getCurrentInstagramToken } from "../../data/instagram";
 import { InstagramPost } from "../_components/Gallery";
 
