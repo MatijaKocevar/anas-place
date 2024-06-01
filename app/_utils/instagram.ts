@@ -28,6 +28,5 @@ export const fetchInstagramPosts = async (url?: string) => {
 
     const data = (await response.json()) as InstagramResponseData;
 
-    console.log("data shit: ", data);
     return data;
 };
