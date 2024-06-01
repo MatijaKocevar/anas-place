@@ -20,22 +20,20 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
-import useUsers from "../../hooks/useUsers";
 import useCalculateTablePageSize from "../../hooks/useCalculateTablePageSize";
 import { userTableColumns } from "../../constants/user-table-columns";
-import Spinner from "../../components/ui/Spinner";
+import { ClerkUser } from "../actions/users";
 
-const Users = () => {
+const Users = ({ users }: { users: ClerkUser[] }) => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const router = useRouter();
-    const { users, loading } = useUsers();
     const [pageIndex, setPageIndex] = useState(0);
     const tableOptionsRef = useRef<HTMLDivElement>(null);
     const tableHeadRowRef = useRef<HTMLDivElement>(null);
     const tableBodyRef = useRef<HTMLDivElement>(null);
 
     const pageSize = useCalculateTablePageSize({
-        loading,
+        loading: false,
         tableOptionsRef,
         tableHeadRowRef,
         tableBodyRef,
@@ -61,6 +59,7 @@ const Users = () => {
             },
             columnFilters,
         },
+        onPaginationChange: () => {},
     });
 
     useEffect(() => {
@@ -73,14 +72,6 @@ const Users = () => {
             setPageIndex(newPageIndex);
         }
     }, [pageSize, users.length, pageIndex]);
-
-    if (loading) {
-        return (
-            <div className="flex justify-start flex-col h-screen-9 max-h-screen-9 overflow-hidden">
-                <Spinner />
-            </div>
-        );
-    }
 
     return (
         <>
