@@ -54,7 +54,7 @@ const Popup = ({ post, onClose }: PopupProps) => {
                             layout="responsive"
                             width={dimensions.width || 1}
                             height={dimensions.height || 1}
-                            objectFit="contain"
+                            objectFit="cover"
                             className="rounded-t-lg"
                             onLoadingComplete={() => handleLoadingComplete}
                         />
