@@ -2,9 +2,10 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import BlurImage from "../../components/BlurImage";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import Spinner from "../../components/ui/Spinner";
 import { fetchInstagramPosts, InstagramResponseData } from "../actions/instagram";
+import { debounce } from "../../lib/utils";
 
 export type InstagramPost = {
     id: string;
@@ -31,6 +32,7 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
     });
 
     const observerRef = useRef<HTMLDivElement | null>(null);
+    const galleryContainerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         if (observerRef.current) {
@@ -48,8 +50,40 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
         }
     }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+    const debouncedSaveScrollPosition = debounce(() => {
+        if (galleryContainerRef.current) {
+            localStorage.setItem(
+                "scrollPosition",
+                galleryContainerRef.current.scrollTop.toString()
+            );
+        }
+    }, 200);
+
+    const saveScrollPosition = useCallback(debouncedSaveScrollPosition, [
+        debouncedSaveScrollPosition,
+    ]);
+
+    useEffect(() => {
+        const galleryContainer = galleryContainerRef.current;
+
+        galleryContainer?.addEventListener("scroll", saveScrollPosition);
+
+        return () => {
+            galleryContainer?.removeEventListener("scroll", saveScrollPosition);
+        };
+    }, [saveScrollPosition]);
+
+    useEffect(() => {
+        const scrollPosition = localStorage.getItem("scrollPosition");
+        const galleryContainer = galleryContainerRef.current;
+
+        if (scrollPosition && galleryContainer) {
+            galleryContainer.scrollTo(0, parseInt(scrollPosition));
+        }
+    }, []);
+
     return (
-        <>
+        <div ref={galleryContainerRef} className="w-full h-full overflow-y-auto hidden-scrollbar">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
                 {data?.pages.map((page) =>
                     page.data.map((post: InstagramPost) => (
@@ -61,9 +95,6 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
                                     priority: false,
                                 }}
                             />
-                            <div className="p-4">
-                                <p className="text-sm">{post.caption}</p>
-                            </div>
                         </div>
                     ))
                 )}
@@ -71,7 +102,7 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
             <div ref={observerRef} className="text-center py-8">
                 {isFetchingNextPage && <Spinner />}
             </div>
-        </>
+        </div>
     );
 };
 
