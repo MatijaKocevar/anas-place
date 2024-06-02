@@ -25,7 +25,7 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
         initialPageParam: "",
         getNextPageParam: (lastPage) => lastPage.paging.next ?? undefined,
         initialData: {
-            pageParams: [initialData.paging.next],
+            pageParams: [""],
             pages: [initialData],
         },
     });
