@@ -5,12 +5,20 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ClerkProvider } from "@clerk/nextjs";
 import { getQueryClient } from "./get-query-client";
 
+const logoUrl = "icons/logo.png";
+
 function Providers({ children }: { children: ReactNode }) {
     const client = getQueryClient();
 
     return (
         <>
-            <ClerkProvider>
+            <ClerkProvider
+                appearance={{
+                    layout: {
+                        logoImageUrl: logoUrl,
+                    },
+                }}
+            >
                 <QueryClientProvider client={client}>
                     {children}
                     <ReactQueryDevtools />
