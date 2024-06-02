@@ -8,7 +8,7 @@ const GalleryPage = async () => {
     const posts = await fetchInstagramPosts();
 
     return (
-        <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto hidden-scrollbar">
+        <div className="w-full h-screen-9 max-h-screen-9 overflow-y-hidden">
             <HydrationBoundary state={dehydrate(queryClient)}>
                 <Gallery initialData={posts} />
             </HydrationBoundary>
