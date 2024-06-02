@@ -1,9 +1,10 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useEffect, useRef, useCallback, useState } from "react";
 import BlurImage from "../../components/BlurImage";
-import { useEffect, useRef, useCallback } from "react";
 import Spinner from "../../components/ui/Spinner";
+import Popup from "../../components/Popup";
 import { fetchInstagramPosts, InstagramResponseData } from "../actions/instagram";
 import { debounce } from "../../lib/utils";
 
@@ -33,6 +34,8 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
 
     const observerRef = useRef<HTMLDivElement | null>(null);
     const galleryContainerRef = useRef<HTMLDivElement | null>(null);
+
+    const [selectedPost, setSelectedPost] = useState<InstagramPost | null>(null);
 
     useEffect(() => {
         if (observerRef.current) {
@@ -83,26 +86,36 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
     }, []);
 
     return (
-        <div ref={galleryContainerRef} className="w-full h-full overflow-y-auto hidden-scrollbar">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-                {data?.pages.map((page) =>
-                    page.data.map((post: InstagramPost) => (
-                        <div key={post.id} className="bg-white shadow rounded-2xl overflow-hidden">
-                            <BlurImage
-                                image={{
-                                    href: post.permalink,
-                                    imageSrc: post.media_url,
-                                    priority: false,
-                                }}
-                            />
-                        </div>
-                    ))
-                )}
+        <>
+            <div
+                ref={galleryContainerRef}
+                className="w-full h-full overflow-y-auto hidden-scrollbar"
+            >
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
+                    {data?.pages.map((page) =>
+                        page.data.map((post: InstagramPost) => (
+                            <div
+                                key={post.id}
+                                className="bg-white shadow rounded-2xl overflow-hidden"
+                                onClick={() => setSelectedPost(post)}
+                            >
+                                <BlurImage
+                                    image={{
+                                        href: post.permalink,
+                                        imageSrc: post.media_url,
+                                        priority: false,
+                                    }}
+                                />
+                            </div>
+                        ))
+                    )}
+                </div>
+                <div ref={observerRef} className="text-center py-8">
+                    {isFetchingNextPage && <Spinner />}
+                </div>
             </div>
-            <div ref={observerRef} className="text-center py-8">
-                {isFetchingNextPage && <Spinner />}
-            </div>
-        </div>
+            {selectedPost && <Popup post={selectedPost} onClose={() => setSelectedPost(null)} />}
+        </>
     );
 };
 
