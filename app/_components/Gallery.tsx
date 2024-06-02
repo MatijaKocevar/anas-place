@@ -25,7 +25,7 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
         initialPageParam: "",
         getNextPageParam: (lastPage) => lastPage.paging.next ?? undefined,
         initialData: {
-            pageParams: [initialData.paging.next],
+            pageParams: [""],
             pages: [initialData],
         },
     });
@@ -51,14 +51,14 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-                {data?.pages.map((page, pageIndex) =>
-                    page.data.map((post: InstagramPost, index: number) => (
+                {data?.pages.map((page) =>
+                    page.data.map((post: InstagramPost) => (
                         <div key={post.id} className="bg-white shadow rounded-2xl overflow-hidden">
                             <BlurImage
                                 image={{
                                     href: post.permalink,
                                     imageSrc: post.media_url,
-                                    priority: pageIndex === 0 && index < 1,
+                                    priority: false,
                                 }}
                             />
                             <div className="p-4">
