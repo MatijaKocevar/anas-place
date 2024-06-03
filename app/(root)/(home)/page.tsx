@@ -7,6 +7,7 @@ const HomePage = () => {
                 <div className="w-full flex justify-center">
                     <div className="w-[17rem] h-[17rem] overflow-hidden rounded-full border-8 bg-primary-1 border-primary-1">
                         <Image
+                            unoptimized
                             src="/images/ana.webp"
                             width={278}
                             height={278}
