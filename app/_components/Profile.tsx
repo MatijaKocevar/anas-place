@@ -79,6 +79,7 @@ const Profile = ({ params }: ProfileProps) => {
                     {user?.imageUrl && (
                         <div className="flex flex-col items-center">
                             <Image
+                                unoptimized
                                 src={user?.imageUrl ?? ""}
                                 alt="Profile"
                                 className="rounded-full object-cover"
