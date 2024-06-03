@@ -56,7 +56,13 @@ const Sidebar = () => {
                                     }
                                 )}
                             >
-                                <Image src={link.imgURL} alt={link.label} width={30} height={30} />
+                                <Image
+                                    unoptimized
+                                    src={link.imgURL}
+                                    alt={link.label}
+                                    width={30}
+                                    height={30}
+                                />
                                 {isOpen && (
                                     <p className={`text-lg font-semibold ${!isOpen && "hidden"}`}>
                                         {link.label}

@@ -13,6 +13,7 @@ export const userTableColumns: ColumnDef<ClerkUser>[] = [
 
             return (
                 <Image
+                    unoptimized
                     className="rounded-full"
                     src={imageUrl}
                     alt="profile img"

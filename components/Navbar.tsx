@@ -8,7 +8,7 @@ const Navbar = () => {
         <nav className="fixed bg-primary-1 z-50 w-full px-6 py-4 lg:px-10">
             <div className="flex justify-between ">
                 <Link href="/" className="flex items-center gap-1">
-                    <Image src="/icons/logo.svg" width={32} height={32} alt="logo" />
+                    <Image unoptimized src="/icons/logo.svg" width={32} height={32} alt="logo" />
                     <p className="text-[26px] font-extrabold text-black">Ana&apos;s place</p>
                 </Link>
 

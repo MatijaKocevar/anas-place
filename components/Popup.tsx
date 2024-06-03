@@ -49,6 +49,7 @@ const Popup = ({ post, onClose }: PopupProps) => {
                         }}
                     >
                         <Image
+                            unoptimized
                             alt={post.caption}
                             src={post.media_url}
                             layout="responsive"
