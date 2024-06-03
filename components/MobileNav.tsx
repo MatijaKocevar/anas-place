@@ -27,7 +27,13 @@ const MobileNav = () => {
                 </SheetTrigger>
                 <SheetContent side="left" className="border-none bg-primary-1">
                     <Link href="/" className="flex items-center gap-1">
-                        <Image src="/icons/logo.svg" width={32} height={32} alt="logo" />
+                        <Image
+                            unoptimized
+                            src="/icons/logo.svg"
+                            width={32}
+                            height={32}
+                            alt="logo"
+                        />
                         <p className="text-[26px] font-extrabold text-black">Ana&apos;s place</p>
                     </Link>
                     <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
@@ -53,6 +59,7 @@ const MobileNav = () => {
                                                     )}
                                                 >
                                                     <Image
+                                                        unoptimized
                                                         src={link.imgURL}
                                                         alt={link.label}
                                                         width={20}
