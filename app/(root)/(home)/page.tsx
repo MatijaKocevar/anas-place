@@ -31,15 +31,31 @@ const HomePage = () => {
                         Medtem lahko v galeriji preverite moje delo in si zamislite kakšno idejo za
                         vaše nohte.
                     </p>
-                    <p className="text-black text-center">
-                        Zenkrat me lahko kontaktirate na telefonsko številko 040 123 456 ali preko
-                        Instagrama. Veselim se vašega obiska! 😊
+                    <p className="text-black mb-8 text-center">
+                        Zaenkrat me lahko kontaktirate na telefonsko številko{" "}
+                        <a
+                            href="tel:040513855"
+                            className="text-black bg-primary-1 rounded-full px-2 py-1"
+                        >
+                            040 513 855
+                        </a>{" "}
+                        ali preko{" "}
+                        <a
+                            href="https://www.instagram.com/anas.place/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-black bg-primary-1 rounded-full px-2 py-1"
+                        >
+                            Instagrama
+                        </a>
+                        .
                     </p>
+                    <p className="text-black text-center">Veselim se vašega obiska! 😊</p>
                 </div>
                 <div className="flex justify-center">
                     <a
                         href="/gallery"
-                        className="bg-primary-1 text-black font-bold py-2 px-4 rounded-full mt-4 hover:bg-accent-gold-1"
+                        className="bg-primary-1 text-black font-bold py-2 px-4 rounded-full hover:bg-accent-gold-1"
                     >
                         Pojdi v Galerijo
                     </a>

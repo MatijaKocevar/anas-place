@@ -71,10 +71,25 @@ export default function BookingsPage() {
         setView(newView);
     };
 
+    const translateView = (view: "day" | "week" | "month") => {
+        switch (view) {
+            case "day":
+                return "Dan";
+            case "week":
+                return "Teden";
+            case "month":
+                return "Mesec";
+            default:
+                return view;
+        }
+    };
+
     return (
         <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto">
             <header className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800">Trenutni pogled: {view}</h2>
+                <h2 className="text-2xl font-semibold text-gray-800">
+                    Trenutni pogled: {translateView(view)}
+                </h2>
                 <nav className="flex space-x-4">
                     <button
                         onClick={() => handleViewChange("day")}
