@@ -2,37 +2,37 @@ export const navigationLinks = [
     {
         imgURL: "/icons/Home.svg",
         route: "/",
-        label: "Home",
+        label: "Domov",
         admin: false,
     },
     {
         imgURL: "/icons/gallery.svg",
         route: "/gallery",
-        label: "Gallery",
+        label: "Galerija",
         admin: false,
     },
     {
         imgURL: "/icons/services.svg",
         route: "/services",
-        label: "Services",
+        label: "Storitve",
         admin: false,
     },
     {
         imgURL: "/icons/upcoming.svg",
         route: "/bookings",
-        label: "Bookings",
+        label: "Rezervacije",
         admin: true,
     },
     {
         imgURL: "/icons/receipt.svg",
         route: "/receipts",
-        label: "Receipts",
+        label: "Računi",
         admin: true,
     },
     {
         imgURL: "/icons/users.svg",
         route: "/users",
-        label: "Users",
+        label: "Uporabniki",
         admin: true,
     },
 ];

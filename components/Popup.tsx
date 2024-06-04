@@ -68,7 +68,7 @@ const Popup = ({ post, onClose }: PopupProps) => {
                             rel="noopener noreferrer"
                             className="block mt-2 text-blue-500 underline"
                         >
-                            View on Instagram
+                            Poglej na Instagramu
                         </a>
                     </div>
                 </div>
