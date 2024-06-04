@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ClerkProvider } from "@clerk/nextjs";
 import { getQueryClient } from "./get-query-client";
+import { slSI } from "../constants/localizations";
 
 const logoUrl = "icons/logo.png";
 
@@ -18,6 +19,7 @@ function Providers({ children }: { children: ReactNode }) {
                         logoImageUrl: logoUrl,
                     },
                 }}
+                localization={slSI}
             >
                 <QueryClientProvider client={client}>
                     {children}
