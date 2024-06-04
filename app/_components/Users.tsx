@@ -93,7 +93,7 @@ const Users = ({ users }: { users: ClerkUser[] }) => {
                         onClick={() => setPageIndex(pageIndex - 1)}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        Previous
+                        Nazaj
                     </Button>
                     <Button
                         variant="outline"
@@ -101,7 +101,7 @@ const Users = ({ users }: { users: ClerkUser[] }) => {
                         onClick={() => setPageIndex(pageIndex + 1)}
                         disabled={!table.getCanNextPage()}
                     >
-                        Next
+                        Naprej
                     </Button>
                 </div>
             </div>
@@ -161,7 +161,7 @@ const Users = ({ users }: { users: ClerkUser[] }) => {
                                         colSpan={userTableColumns.length}
                                         className="h-24 text-center"
                                     >
-                                        No results.
+                                        Ni rezultatov.
                                     </TableCell>
                                 </TableRow>
                             )}

@@ -74,7 +74,7 @@ export default function BookingsPage() {
     return (
         <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto">
             <header className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800">Current View: {view}</h2>
+                <h2 className="text-2xl font-semibold text-gray-800">Trenutni pogled: {view}</h2>
                 <nav className="flex space-x-4">
                     <button
                         onClick={() => handleViewChange("day")}
@@ -84,7 +84,7 @@ export default function BookingsPage() {
                                 : "bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white"
                         }`}
                     >
-                        Day
+                        Dan
                     </button>
                     <button
                         onClick={() => handleViewChange("week")}
@@ -94,7 +94,7 @@ export default function BookingsPage() {
                                 : "bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white"
                         }`}
                     >
-                        Week
+                        Teden
                     </button>
                     <button
                         onClick={() => handleViewChange("month")}
@@ -104,7 +104,7 @@ export default function BookingsPage() {
                                 : "bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white"
                         }`}
                     >
-                        Month
+                        Mesec
                     </button>
                 </nav>
             </header>
@@ -124,7 +124,7 @@ export default function BookingsPage() {
                                     {new Date(slot.appointment.endTime).toLocaleTimeString()})
                                 </p>
                             ) : (
-                                <p className="text-gray-500">No appointments</p>
+                                <p className="text-gray-500">Ni rezervacij</p>
                             )}
                         </li>
                     ))}

@@ -7,7 +7,7 @@ import { ClerkUser } from "../app/actions/users";
 export const userTableColumns: ColumnDef<ClerkUser>[] = [
     {
         accessorKey: "imageUrl",
-        header: "Image",
+        header: "",
         cell: ({ row }) => {
             const imageUrl = row.getValue("imageUrl") as string;
 
@@ -28,14 +28,14 @@ export const userTableColumns: ColumnDef<ClerkUser>[] = [
     },
     {
         accessorKey: "firstName",
-        header: "First Name",
+        header: "Ime",
         maxSize: 150,
         minSize: 50,
         size: 100,
     },
     {
         accessorKey: "lastName",
-        header: "Last Name",
+        header: "Priimek",
         maxSize: 150,
         minSize: 50,
         size: 100,
