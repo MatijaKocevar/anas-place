@@ -5,7 +5,7 @@ const HomePage = () => {
         <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto">
             <div className="flex flex-col h-full items-center justify-evenly">
                 <div className="w-full flex justify-center">
-                    <div className="relative w-[17rem] h-[17rem]">
+                    <div className="relative w-[10rem] h-[10rem] sm:w-[17rem] sm:h-[17rem]">
                         <div className="absolute inset-0 overflow-hidden rounded-full border-8 bg-primary-1 border-primary-1">
                             <Image
                                 unoptimized
@@ -16,8 +16,10 @@ const HomePage = () => {
                                 className="object-cover"
                             />
                         </div>
-                        <div className="absolute bottom-2 right-2 px-4 py-2 border-4 border-primary-1 bg-white rounded-full z-20">
-                            <span className="text-black font-bold">Ana K.</span>
+                        <div className="absolute bottom-2 right-2 px-2 py-1 sm:px-4 sm:py-2 border-2 sm:border-4 border-primary-1 bg-white rounded-full z-20">
+                            <span className="text-xs sm:text-base font-bold text-black">
+                                Ana K.
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -33,10 +35,7 @@ const HomePage = () => {
                     </p>
                     <p className="text-black mb-8 text-center">
                         Zaenkrat me lahko kontaktirate na telefonsko številko{" "}
-                        <a
-                            href="tel:040513855"
-                            className="text-black bg-primary-1 rounded-full px-2 py-1"
-                        >
+                        <a href="tel:040513855" className="text-black underline">
                             040 513 855
                         </a>{" "}
                         ali preko{" "}
@@ -44,7 +43,7 @@ const HomePage = () => {
                             href="https://www.instagram.com/anas.place/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-black bg-primary-1 rounded-full px-2 py-1"
+                            className="text-black underline"
                         >
                             Instagrama
                         </a>
