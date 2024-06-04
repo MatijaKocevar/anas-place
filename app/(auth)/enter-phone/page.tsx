@@ -7,13 +7,13 @@ const EnterPhonePage = () => {
     const { isLoaded, user, isSignedIn } = useUser();
 
     if (!isLoaded && !isSignedIn && !user) {
-        return <div>Loading...</div>;
+        return <div>Nalaganje...</div>;
     }
 
     return (
         <div>
-            <p>User: {user?.id}</p>
-            <p>Enter Phone</p>
+            <p>Uporabnik: {user?.id}</p>
+            <p>Vnesi številko</p>
         </div>
     );
 };

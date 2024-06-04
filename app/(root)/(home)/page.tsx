@@ -5,30 +5,60 @@ const HomePage = () => {
         <div className="w-full h-screen-9 max-h-screen-9 overflow-y-auto">
             <div className="flex flex-col h-full items-center justify-evenly">
                 <div className="w-full flex justify-center">
-                    <div className="w-[17rem] h-[17rem] overflow-hidden rounded-full border-8 bg-primary-1 border-primary-1">
-                        <Image
-                            unoptimized
-                            src="/images/ana.webp"
-                            width={278}
-                            height={278}
-                            alt="logo"
-                            className="object-cover"
-                        />
+                    <div className="relative w-[17rem] h-[17rem]">
+                        <div className="absolute inset-0 overflow-hidden rounded-full border-8 bg-primary-1 border-primary-1">
+                            <Image
+                                unoptimized
+                                src="/images/ana.webp"
+                                width={278}
+                                height={278}
+                                alt="logo"
+                                className="object-cover"
+                            />
+                        </div>
+                        <div className="absolute bottom-2 right-2 px-4 py-2 border-4 border-primary-1 bg-white rounded-full z-20">
+                            <span className="text-black font-bold">Ana K.</span>
+                        </div>
                     </div>
                 </div>
                 <div>
-                    <h1 className="text-3xl font-bold text-black mb-4 text-center">
-                        Welcome to Ana&apos;s place!
-                    </h1>
+                    <h1 className="text-3xl font-bold text-black mb-6 text-center">Dobrodošli!</h1>
                     <p className="text-black mb-4 text-center">
-                        Experience the art of nail design with Ana&apos;s place. Our salon provides
-                        a relaxing atmosphere and premium services to ensure you leave feeling
-                        pampered and polished.
+                        Moja spletna stran je trenutno v izdelavi, a kmalu boste lahko enostavno
+                        rezervirali svoj termin kar na spletu!
                     </p>
-                    <p className="text-black text-center">
-                        Our website is currently under construction, but soon you will be able to
-                        book appointments online with ease!
+                    <p className="text-black mb-4 text-center">
+                        Medtem lahko v galeriji preverite moje delo in si zamislite kakšno idejo za
+                        vaše nohte.
                     </p>
+                    <p className="text-black mb-8 text-center">
+                        Zaenkrat me lahko kontaktirate na telefonsko številko{" "}
+                        <a
+                            href="tel:040513855"
+                            className="text-black bg-primary-1 rounded-full px-2 py-1"
+                        >
+                            040 513 855
+                        </a>{" "}
+                        ali preko{" "}
+                        <a
+                            href="https://www.instagram.com/anas.place/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-black bg-primary-1 rounded-full px-2 py-1"
+                        >
+                            Instagrama
+                        </a>
+                        .
+                    </p>
+                    <p className="text-black text-center">Veselim se vašega obiska! 😊</p>
+                </div>
+                <div className="flex justify-center">
+                    <a
+                        href="/gallery"
+                        className="bg-primary-1 text-black font-bold py-2 px-4 rounded-full hover:bg-accent-gold-1"
+                    >
+                        Pojdi v Galerijo
+                    </a>
                 </div>
             </div>
         </div>
