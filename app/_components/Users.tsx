@@ -22,7 +22,7 @@ import {
 import { useRouter } from "next/navigation";
 import useCalculateTablePageSize from "../../hooks/useCalculateTablePageSize";
 import { userTableColumns } from "../../constants/user-table-columns";
-import { ClerkUser } from "../actions/users";
+import { ClerkUser } from "../../actions/users";
 
 const Users = ({ users }: { users: ClerkUser[] }) => {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);

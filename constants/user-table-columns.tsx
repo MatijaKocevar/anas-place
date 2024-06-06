@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { ClerkUser } from "../app/actions/users";
+import { ClerkUser } from "../actions/users";
 
 export const userTableColumns: ColumnDef<ClerkUser>[] = [
     {
