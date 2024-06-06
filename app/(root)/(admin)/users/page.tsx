@@ -1,5 +1,5 @@
 import Users from "../../../_components/Users";
-import { getUsers } from "../../../actions/users";
+import { getUsers } from "../../../../actions/users";
 
 const UsersPage = async () => {
     const users = await getUsers();

@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "../../../utils/get-query-client";
 import Gallery from "../../_components/Gallery";
-import { fetchInstagramPosts } from "../../actions/instagram";
+import { fetchInstagramPosts } from "../../../actions/instagram";
 
 const GalleryPage = async () => {
     const queryClient = getQueryClient();

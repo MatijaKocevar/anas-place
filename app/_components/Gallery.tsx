@@ -5,7 +5,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import BlurImage from "../../components/BlurImage";
 import Spinner from "../../components/ui/Spinner";
 import Popup from "../../components/Popup";
-import { fetchInstagramPosts, InstagramResponseData } from "../actions/instagram";
+import { fetchInstagramPosts, InstagramResponseData } from "../../actions/instagram";
 import { debounce } from "../../lib/utils";
 
 export type InstagramPost = {
