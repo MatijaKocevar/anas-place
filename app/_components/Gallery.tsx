@@ -35,8 +35,8 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
             pageParams: [""],
             pages: [initialData],
         },
-        refetchOnMount: true,
         refetchInterval: 3600000,
+        refetchOnMount: true,
     });
 
     const observerRef = useRef<HTMLDivElement | null>(null);
