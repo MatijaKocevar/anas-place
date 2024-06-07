@@ -35,6 +35,8 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
             pageParams: [""],
             pages: [initialData],
         },
+        refetchOnMount: true,
+        refetchInterval: 3600000,
     });
 
     const observerRef = useRef<HTMLDivElement | null>(null);
@@ -100,7 +102,7 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
                 localStorage.setItem(
                     "scrollPosition",
                     JSON.stringify({
-                        scrollTop: galleryContainerRef.current?.scrollTop ?? 0,
+                        scrollTop: 0,
                         createdAt: Date.now(),
                     } as ScrollPosition)
                 );
@@ -115,24 +117,27 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
                 className="w-full h-full overflow-y-auto hidden-scrollbar"
             >
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
-                    {data?.pages.map((page) =>
-                        page.data.map((post: InstagramPost) => (
-                            <div
-                                key={post.id}
-                                className="bg-white shadow rounded-2xl overflow-hidden"
-                                onClick={() => setSelectedPost(post)}
-                            >
-                                <BlurImage
-                                    image={{
-                                        href: post.permalink,
-                                        imageSrc: post.media_url,
-                                        priority: false,
-                                    }}
-                                />
-                            </div>
-                        ))
+                    {data?.pages.flatMap((page) =>
+                        page.data
+                            .filter((post: InstagramPost) => post.media_type === "IMAGE")
+                            .map((post: InstagramPost) => (
+                                <div
+                                    key={post.id}
+                                    className="bg-white shadow rounded-2xl overflow-hidden"
+                                    onClick={() => setSelectedPost(post)}
+                                >
+                                    <BlurImage
+                                        image={{
+                                            href: post.permalink,
+                                            imageSrc: post.media_url,
+                                            priority: false,
+                                        }}
+                                    />
+                                </div>
+                            ))
                     )}
                 </div>
+
                 <div ref={observerRef} className="text-center py-8">
                     {isFetchingNextPage && <Spinner />}
                 </div>
