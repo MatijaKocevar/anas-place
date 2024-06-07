@@ -1,7 +1,7 @@
 "use server";
 
-import { getCurrentInstagramToken } from "../../data/instagram";
-import { InstagramPost } from "../_components/Gallery";
+import { getCurrentInstagramToken } from "../data/instagram";
+import { InstagramPost } from "../app/_components/Gallery";
 
 export interface InstagramResponseData {
     data: InstagramPost[];

@@ -5,7 +5,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import BlurImage from "../../components/BlurImage";
 import Spinner from "../../components/ui/Spinner";
 import Popup from "../../components/Popup";
-import { fetchInstagramPosts, InstagramResponseData } from "../actions/instagram";
+import { fetchInstagramPosts, InstagramResponseData } from "../../actions/instagram";
 import { debounce } from "../../lib/utils";
 
 export type InstagramPost = {
@@ -15,6 +15,11 @@ export type InstagramPost = {
     media_url: string;
     permalink: string;
 };
+
+interface ScrollPosition {
+    scrollTop: number;
+    createdAt: number;
+}
 
 const fetchPosts = async ({ pageParam }: { pageParam: string }) => {
     return await fetchInstagramPosts(pageParam);
@@ -57,7 +62,10 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
         if (galleryContainerRef.current) {
             localStorage.setItem(
                 "scrollPosition",
-                galleryContainerRef.current.scrollTop.toString()
+                JSON.stringify({
+                    scrollTop: galleryContainerRef.current.scrollTop,
+                    createdAt: Date.now(),
+                } as ScrollPosition)
             );
         }
     }, 200);
@@ -81,7 +89,22 @@ const Gallery = ({ initialData }: { initialData: InstagramResponseData }) => {
         const galleryContainer = galleryContainerRef.current;
 
         if (scrollPosition && galleryContainer) {
-            galleryContainer.scrollTo(0, parseInt(scrollPosition));
+            const parsedScrollPosition = JSON.parse(scrollPosition) as ScrollPosition;
+            const oneHour = 60 * 60 * 1000;
+
+            if (Date.now() - parsedScrollPosition.createdAt < oneHour) {
+                galleryContainer.scrollTo(0, parsedScrollPosition.scrollTop);
+            } else {
+                galleryContainer.scrollTo(0, 0);
+
+                localStorage.setItem(
+                    "scrollPosition",
+                    JSON.stringify({
+                        scrollTop: galleryContainerRef.current?.scrollTop ?? 0,
+                        createdAt: Date.now(),
+                    } as ScrollPosition)
+                );
+            }
         }
     }, []);
 
