@@ -34,11 +34,7 @@ const HomePage = () => {
                         vaše nohte.
                     </p>
                     <p className="text-black mb-8 text-center">
-                        Zaenkrat me lahko kontaktirate na telefonsko številko{" "}
-                        <a href="tel:040513855" className="text-black underline">
-                            040 513 855
-                        </a>{" "}
-                        ali preko{" "}
+                        Kontaktirate me lahko preko{" "}
                         <a
                             href="https://www.instagram.com/anas.place/"
                             target="_blank"
