@@ -5,11 +5,11 @@ export async function getCurrentInstagramToken() {
     const tokenRecord = await prisma.instagramToken.findUnique({
         where: { id: 1 },
     });
-    return tokenRecord ? tokenRecord.token : null;
+    return tokenRecord ? tokenRecord : null;
 }
 
 export async function updateInstagramToken(newToken: string, newExpiry: Date) {
-    await prisma.instagramToken.update({
+    return await prisma.instagramToken.update({
         where: { id: 1 },
         data: {
             token: newToken,
@@ -20,17 +20,18 @@ export async function updateInstagramToken(newToken: string, newExpiry: Date) {
 
 export async function refreshInstagramToken() {
     const currentToken = await getCurrentInstagramToken();
+
     const response = await axios.get(`https://graph.instagram.com/refresh_access_token`, {
         params: {
             grant_type: "ig_refresh_token",
-            access_token: currentToken,
+            access_token: currentToken?.token,
         },
     });
 
     const newToken = response.data.access_token;
     const newExpiry = new Date(Date.now() + response.data.expires_in * 1000);
 
-    await updateInstagramToken(newToken, newExpiry);
+    const updateNewToken = await updateInstagramToken(newToken, newExpiry);
 
-    return newToken;
+    return updateNewToken;
 }

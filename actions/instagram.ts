@@ -1,6 +1,6 @@
 "use server";
 
-import { getCurrentInstagramToken } from "../data/instagram";
+import { getCurrentInstagramToken, refreshInstagramToken } from "../data/instagram";
 import { InstagramPost } from "../app/_components/Gallery";
 
 export interface InstagramResponseData {
@@ -19,7 +19,20 @@ export const fetchInstagramPosts = async (url?: string) => {
 
     if (!nextUrl) {
         const instagramToken = await getCurrentInstagramToken();
-        nextUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink&access_token=${instagramToken}`;
+
+        if (instagramToken) {
+            const expiryDate = new Date(instagramToken.expiry);
+            const now = new Date();
+            const oneWeekBeforeExpiry = new Date(expiryDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+            if (now >= oneWeekBeforeExpiry) {
+                const newToken = await refreshInstagramToken();
+                instagramToken.token = newToken.token;
+                instagramToken.expiry = newToken.expiry;
+            }
+        }
+
+        nextUrl = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink&access_token=${instagramToken?.token}`;
     }
 
     const response = await fetch(nextUrl);
