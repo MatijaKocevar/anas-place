@@ -1,7 +1,7 @@
 import Profile, { ProfileProps } from "../../../../_components/Profile";
 
-const UpdateUserPage = ({ params }: ProfileProps) => {
-    return <Profile params={params} />;
+const UpdateUserPage = async ({ params }: ProfileProps) => {
+    return <Profile params={await params} />;
 };
 
 export default UpdateUserPage;

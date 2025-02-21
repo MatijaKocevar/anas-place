@@ -1,44 +1,42 @@
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { roles } from "./constants/roles";
 
+const isProtectedRoute = createRouteMatcher(["/users", "/api", "/receipts", "/bookings"]);
 const activeOrgId = process.env.CLERK_ACTIVE_ORGANIZATION_ID;
 
-export default authMiddleware({
-    publicRoutes: [
-        "/",
-        "/sign-in",
-        "/sign-up",
-        "/gallery",
-        "/api/gallery/get-instagram-posts",
-        "/services",
-    ],
-    afterAuth(auth, req) {
-        if (!auth.userId && !auth.isPublicRoute) {
+export default clerkMiddleware(async (auth, req) => {
+    const { userId, sessionClaims, redirectToSignIn } = await auth();
+
+    if (isProtectedRoute(req)) {
+        if (!userId) {
             return redirectToSignIn({ returnBackUrl: req.url });
         }
 
-        if (auth.userId && activeOrgId) {
-            const protectedPaths = ["/users", "/api", "/receipts", "/bookings"];
-            const isAccessingProtectedRoute = protectedPaths.some((protectedPath) =>
-                req.nextUrl.pathname.startsWith(protectedPath)
-            );
-            const userOrganizations = auth.sessionClaims.userOrganizations as {
-                [orgId: string]: string;
-            };
-            const isAdminInOrg = userOrganizations[activeOrgId] === roles.ADMIN;
+        const userOrganizations = sessionClaims?.userOrganizations as {
+            [orgId: string]: string;
+        };
 
-            if (isAccessingProtectedRoute && !isAdminInOrg) {
-                const url = req.nextUrl.clone();
-                url.pathname = "/";
-                return NextResponse.rewrite(url);
-            }
+        console.log(userOrganizations);
+        console.log(activeOrgId);
+
+        const isAdmin = activeOrgId && userOrganizations?.[activeOrgId] === "org:admin";
+
+        console.log(isAdmin);
+
+        if (!isAdmin) {
+            const url = new URL("/", req.url);
+            return NextResponse.redirect(url);
         }
+    }
 
-        return NextResponse.next();
-    },
+    return NextResponse.next();
 });
 
 export const config = {
-    matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+    matcher: [
+        // Skip Next.js internals and all static files, unless found in search params
+        "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+        // Always run for API routes
+        "/(api|trpc)(.*)",
+    ],
 };

@@ -42,30 +42,8 @@ function generateTimeSlots(): TimeSlot[] {
 
 export default function BookingsPage() {
     const [view, setView] = useState<"day" | "week" | "month">("day");
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [appointments] = useState<Appointment[]>([]);
     const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(generateTimeSlots());
-
-    useEffect(() => {
-        const fetchAppointments = async () => {
-            const response = await fetch(`/api/appointments?view=${view}`);
-            const data = (await response.json()) as Appointment[];
-            setAppointments(data);
-
-            // Combine appointments with time slots
-            const updatedSlots = timeSlots.map((slot) => {
-                const appointment = data.find(
-                    (appt) =>
-                        new Date(appt.startTime) >= new Date(slot.startTime) &&
-                        new Date(appt.endTime) <= new Date(slot.endTime)
-                );
-                return { ...slot, appointment };
-            });
-
-            setTimeSlots(updatedSlots);
-        };
-
-        fetchAppointments();
-    }, [view, timeSlots]);
 
     const handleViewChange = (newView: "day" | "week" | "month") => {
         setView(newView);

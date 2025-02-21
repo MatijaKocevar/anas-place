@@ -1,4 +1,4 @@
-import { clerkApi } from "@clerk/nextjs/edge-middlewarefiles";
+import { clerkClient } from "@clerk/nextjs/server";
 import { UserResource } from "@clerk/types";
 import { NextResponse } from "next/server";
 
@@ -9,7 +9,9 @@ export async function PATCH(req: Request, { params }: { params: { userId: string
 
     const { firstName, lastName, username } = body;
 
-    const updatedUser = await clerkApi.users?.updateUser(params.userId ?? "", {
+    const updatedUser = await (
+        await clerkClient()
+    ).users.updateUser(params.userId ?? "", {
         firstName: firstName ?? "",
         lastName: lastName ?? "",
         username: username ?? "",
