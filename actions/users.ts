@@ -1,6 +1,6 @@
 "use server";
 
-import { clerkApi } from "@clerk/nextjs/edge-middlewarefiles";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export interface ClerkUser {
     id: string;
@@ -30,10 +30,10 @@ export interface ClerkUserListResponse {
 }
 
 export const getUsers = async () => {
-    const apiUsers = await clerkApi.users.getUserList({ limit: 100 });
+    const apiUsers = await (await clerkClient()).users.getUserList({ limit: 100 });
 
     // Map the users to only include the properties needed
-    const users: ClerkUser[] = apiUsers.map((user: any) => ({
+    const users: ClerkUser[] = apiUsers.data.map((user: any) => ({
         id: user.id,
         username: user.username,
         emailAddresses: user.emailAddresses.map((email: any) => ({
