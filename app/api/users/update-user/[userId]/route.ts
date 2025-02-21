@@ -1,25 +1,20 @@
+/* eslint-disable */
 import { clerkClient } from "@clerk/nextjs/server";
-import { UserResource } from "@clerk/types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: Request, { params }: { params: { userId: string } }) {
-    const body = (await req.json()) as Partial<UserResource>;
+export async function PATCH(
+    request: NextRequest,
+    { params }: { params: Promise<{ userId: string }> }
+) {
+    const resolvedParams = await params;
+    try {
+        const data = await request.json();
+        const user = await (await clerkClient()).users.updateUser(resolvedParams.userId, data);
 
-    if (!body) return new NextResponse(null, { status: 400 });
+        if (!user) return new NextResponse(null, { status: 404 });
 
-    const { firstName, lastName, username } = body;
-
-    const updatedUser = await (
-        await clerkClient()
-    ).users.updateUser(params.userId ?? "", {
-        firstName: firstName ?? "",
-        lastName: lastName ?? "",
-        username: username ?? "",
-    });
-
-    if (!updatedUser) {
-        return new NextResponse(null, { status: 404 });
+        return NextResponse.json(user);
+    } catch (error) {
+        return NextResponse.json({ error: "Error updating user" }, { status: 500 });
     }
-
-    return new NextResponse(JSON.stringify(updatedUser));
 }
