@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Appointment = {
     id: string;
@@ -42,8 +42,7 @@ function generateTimeSlots(): TimeSlot[] {
 
 export default function BookingsPage() {
     const [view, setView] = useState<"day" | "week" | "month">("day");
-    const [appointments] = useState<Appointment[]>([]);
-    const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(generateTimeSlots());
+    const [timeSlots] = useState<TimeSlot[]>(generateTimeSlots());
 
     const handleViewChange = (newView: "day" | "week" | "month") => {
         setView(newView);

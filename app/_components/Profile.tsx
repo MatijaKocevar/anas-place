@@ -6,13 +6,13 @@ import useUserUpdate from "../../hooks/useUserUpdate";
 import Spinner from "../../components/ui/Spinner";
 import { UserResource } from "@clerk/types";
 
-export interface ProfileProps {
+interface ProfileProps {
     params: {
         userId: string;
     };
 }
 
-const Profile = ({ params }: ProfileProps) => {
+export function Profile({ params }: ProfileProps) {
     const [formData, setFormData] = useState<Partial<UserResource>>({});
     const { user, updateUser, loading } = useUserUpdate(params.userId);
 
@@ -173,6 +173,4 @@ const Profile = ({ params }: ProfileProps) => {
             </form>
         </div>
     );
-};
-
-export default Profile;
+}

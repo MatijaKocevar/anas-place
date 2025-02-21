@@ -1,6 +1,6 @@
 import type { LocalizationResource } from "@clerk/types";
 
-export const slSI: LocalizationResource = {
+export const slSI: any = {
     locale: "sl-SI",
     backButton: "Nazaj",
     badge__default: "Privzeto",
