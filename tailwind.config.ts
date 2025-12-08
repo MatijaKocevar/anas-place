@@ -3,7 +3,12 @@ const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config = {
     darkMode: ["class"],
-    content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+    content: [
+        "./pages/**/*.{ts,tsx}",
+        "./components/**/*.{ts,tsx}",
+        "./app/**/*.{ts,tsx}",
+        "./src/**/*.{ts,tsx}",
+    ],
     prefix: "",
     theme: {
         container: {
@@ -14,6 +19,14 @@ const config = {
             },
         },
         extend: {
+            maxHeight: {
+                "screen-9": "calc(100vh - 9rem)",
+                "screen-13": "calc(100vh - 13rem)",
+            },
+            height: {
+                "screen-9": "calc(100vh - 9rem)",
+                "screen-13": "calc(100vh - 13rem)",
+            },
             fontFamily: {
                 sans: ["var(--font-sans)", ...fontFamily.sans],
             },
@@ -45,6 +58,9 @@ const config = {
                         1: "#F6E05E", // Golden hue
                     },
                 },
+                muted: {
+                    1: "#E2E8F0", // Light gray for muted backgrounds
+                },
             },
             borderRadius: {
                 lg: "var(--radius)",
@@ -60,14 +76,24 @@ const config = {
                     from: { height: "var(--radix-accordion-content-height)" },
                     to: { height: "0" },
                 },
+                spin: {
+                    "0%": { transform: "rotate(0deg)" },
+                    "100%": { transform: "rotate(360deg)" },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
+                spin: "spin 1s linear infinite",
             },
+            scrollbar: ["rounded"],
         },
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [
+        require("tailwindcss-animate"),
+        require("@tailwindcss/aspect-ratio"),
+        require("tailwind-scrollbar"),
+    ],
 } satisfies Config;
 
 export default config;
